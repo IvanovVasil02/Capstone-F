@@ -77,3 +77,48 @@ a {
   text-shadow: 1px 1px 0 #888;
   font-size: 1.2rem;
 }
+
+#login-form input :not(:last-child) {
+  border: 0px;
+  border-radius: 0;
+  border-bottom: 2px solid black;
+  background-color: transparent;
+}
+
+
+.form-control:focus {
+  box-shadow: inset;
+}
+
+.form-control::placeholder {
+  color: #000;
+  font-weight: bold;
+}
+
+.input-group-text {
+  border: 0;
+}
+
+.input-group-text:focus {
+  box-shadow: inset;
+}
+
+.close-btn {
+  font-size: 2.5rem;
+}
+
+.close-btn {
+  cursor: pointer;
+}
+
+.form-control a {
+  font-size: 1 rem !important;
+}
+
+form span:last-child {
+  font-size: 1.1rem;
+}
+
+form a:last-child {
+  font-size: 1.1rem !important;
+}
