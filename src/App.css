@@ -4,43 +4,13 @@
 }
 
 body {
-  background-color: #F3F7FD;
+  background-color: transparent !important;
+  margin: 0;
 }
 
 ::before,
 *::after {
   box-sizing: border-box;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
 }
 
 .card {
@@ -52,5 +22,58 @@ body {
 }
 
 #topbar {
-  background-color: #DBE8FA !important;
+  background-color: #F0F6FB(8, 184, 8, 0.523) !important;
+  color: #FFF;
+  height: 70px;
+}
+
+a {
+  font-size: 1.3rem !important;
+}
+
+#basic-navbar-nav a:hover {
+  color: #18A3EB !important;
+  text-shadow: 1px 1px 3px #43c1f7;
+}
+
+.btn-login {
+  font-size: 1.1rem !important;
+  background-image: linear-gradient(#5585E7, #37BEF7) !important;
+  box-shadow: 1px 1px 5px #43c1f7;
+  border-radius: 20px !important;
+  padding-inline: 30px !important;
+  border: 0px !important;
+
+}
+
+.logo-container {
+  font-weight: bold;
+  font-size: 1.8rem !important;
+}
+
+.logo-container svg {
+  color: red !important;
+}
+
+.logo-container span:first-child {
+  color: #ff0000 !important;
+}
+
+.header {
+  background-image: url('./assets/bg_3.jpg');
+  background-size: cover;
+  padding: 120px;
+  /* Aggiungi padding a tuo piacimento */
+}
+
+.header h1 {
+  color: #F0F6FB;
+  text-shadow: 3px 3px 2px grey;
+}
+
+.header p {
+  font-weight: 800;
+  color: #000;
+  text-shadow: 1px 1px 0 #888;
+  font-size: 1.2rem;
 }

@@ -1,13 +1,11 @@
-import { Container } from "react-bootstrap";
 import Topbar from "./Topbar";
+import Header from "./Header";
 
 const HomePage = () => {
   return (
     <>
       <Topbar />
-      <Container>
-        <h2>Ciaoooo</h2>
-      </Container>
+      <Header />
     </>
   );
 };

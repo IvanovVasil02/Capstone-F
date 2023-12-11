@@ -1,30 +1,39 @@
-import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
-import logoImg from "../assets/";
-
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { BsClipboardHeart } from "react-icons/bs";
 const Topbar = () => {
   return (
     <>
-      <Navbar expand='lg' className='bg-body-tertiary' id='topbar'>
-        <Container>
-          <Navbar.Brand href='#home'>
-            <img src='../assets/logo.png' alt='as' />
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='me-auto'>
-              <Nav.Link href='#home'>Home</Nav.Link>
-              <Nav.Link href='#link'>Link</Nav.Link>
-              <NavDropdown title='Dropdown' id='basic-nav-dropdown'>
-                <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
-                <NavDropdown.Item href='#action/3.2'>Another action</NavDropdown.Item>
-                <NavDropdown.Item href='#action/3.3'>Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href='#action/3.4'>Separated link</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <div>
+        <Navbar expand='lg' className='bg-transparent shadow-sm' id='topbar'>
+          <Container>
+            <Navbar.Brand href='#home' className='logo-container'>
+              <span>Auto</span>
+              <span>Ricetta</span>
+              <BsClipboardHeart />
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls='basic-navbar-nav' />
+            <Navbar.Collapse id='basic-navbar-nav'>
+              <Nav className='ms-auto text-center d-flex justify-content-center align-items-center'>
+                <Nav.Link href='#home' className='text-dark fw-bold'>
+                  Home
+                </Nav.Link>
+                <Nav.Link href='#link' className='text-dark fw-bold'>
+                  Medicine
+                </Nav.Link>
+                <Nav.Link href='#link' className='text-dark fw-bold'>
+                  Ricette
+                </Nav.Link>
+                <Nav.Link href='#home' className='text-dark fw-bold'>
+                  Nuova ricetta
+                </Nav.Link>
+                <Nav.Link href='#home' className='text-white fw-bold text-decoration-none'>
+                  <Button className='btn-login border-0'>Login</Button>
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+      </div>
     </>
   );
 };
