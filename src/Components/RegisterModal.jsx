@@ -8,7 +8,7 @@ const RegisterModal = (props) => {
   const [birthDate, setBirthDate] = useState("");
   const [address, setAddress] = useState("");
   const [sex, setSex] = useState("");
-  const [municipality, setMunicipality] = useState("");
+  const [cap, setCap] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -125,10 +125,10 @@ const RegisterModal = (props) => {
                   <Form.Control
                     required
                     type='text'
-                    placeholder='Comune di residenza'
-                    value={municipality}
+                    placeholder='Cap comune di residenza'
+                    value={cap}
                     onChange={(e) => {
-                      setMunicipality(e.target.value);
+                      setCap(e.target.value);
                     }}
                   />
                 </Form.Group>{" "}
