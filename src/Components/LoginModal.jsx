@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button, Col, Form, InputGroup, Modal, Nav, Row } from "react-bootstrap";
-import { BsX } from "react-icons/bs";
+import { Button, Col, Form, Modal, Nav, Navbar, Row } from "react-bootstrap";
+import { BsClipboardHeart, BsX } from "react-icons/bs";
 const LoginModal = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,14 +9,21 @@ const LoginModal = (props) => {
       <Modal size='md' show={props.show} aria-labelledby='example-modal-sizes-title-sm'>
         <Modal.Header className='d-flex flex-column align-items-center justify-content-center'>
           <div className='d-flex align-items-center w-100'>
-            <h3 className='fw-bold'>Bentornato</h3>
+            <h3 className='fw-bold'>
+              Bentornato in{" "}
+              <Navbar.Brand href='#home' className='logo-container'>
+                <span>Auto</span>
+                <span>Ricetta</span>
+                <BsClipboardHeart />
+              </Navbar.Brand>
+            </h3>
             <BsX className='close-btn ms-auto' onClick={props.handleClose} />
           </div>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Row id='login-form' className='mb-3 justify-content-center g-5'>
-              <Form.Group as={Col} md='10' className='text-center'>
+            <Row id='login-form' className='mb-3 justify-content-center g-4'>
+              <Form.Group as={Col} md='10' className='text-center border-1'>
                 <Form.Control
                   required
                   type='email'
