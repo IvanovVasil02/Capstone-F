@@ -1,9 +1,11 @@
-import { GET_CURRENT_USER, GET_SELECTED_ELEMENT } from "../actions/mainActions";
+import { SAVED_TOKEN } from "../actions/authenticationActions";
+import { GET_CURRENT_USER, GET_SELECTED_ELEMENT, LOGOUT } from "../actions/mainActions";
 
 const mainState = {
   searchResults: [],
   selectedElement: null,
-  currentUser: {},
+  savedToken: null,
+  currentUser: null,
 };
 
 const mainReducer = (state = mainState, action) => {
@@ -17,6 +19,16 @@ const mainReducer = (state = mainState, action) => {
       return {
         ...state,
         selectedElement: action.payload,
+      };
+    case SAVED_TOKEN:
+      return {
+        ...state,
+        savedToken: action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        currentUser: action.payload,
       };
     default:
       return state;

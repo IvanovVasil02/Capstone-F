@@ -1,21 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Nav, Navbar, Row } from "react-bootstrap";
 import { BsClipboardHeart, BsX } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../redux/actions/authenticationActions";
 
 const RegisterModal = (props) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [address, setAddress] = useState("");
   const [sex, setSex] = useState("");
-  const [cap, setCap] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [doctor, setDoctor] = useState("");
+  const [doctors, setDoctors] = useState();
   const [showSecondModal, setShowSecondModal] = useState(false);
 
   const hadnleCloseSecondModal = () => setShowSecondModal(false);
   const hadnleShowSecondModal = () => setShowSecondModal(true);
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    dispatch(registerUser(name, surname, birthDate, address, sex, postalCode, email, password, phoneNumber, doctor));
+  };
+
+  const fetchDoctors = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/doctors");
+      const data = await response.json();
+      setDoctors(data);
+    } catch (error) {
+      console.error("Errore durante il recupero dei dottori", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
 
   return (
     <>
@@ -34,7 +58,7 @@ const RegisterModal = (props) => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <div className={showSecondModal && "d-none"}>
               <Row id='login-form' className='mb-3 justify-content-center g-4'>
                 <Form.Group as={Col} md='10' className='text-center border-1'>
@@ -79,18 +103,22 @@ const RegisterModal = (props) => {
                     <Form.Check
                       inline
                       label='M'
+                      value={"M"}
                       name='group1'
                       type='radio'
                       className='text-secondary'
                       id={`inline-radio-1`}
+                      onChange={(e) => setSex(e.target.value)}
                     />
                     <Form.Check
                       inline
                       label='F'
+                      value={"F"}
                       name='group1'
                       type='radio'
                       className='text-secondary'
                       id={`inline-radio-2`}
+                      onChange={(e) => setSex(e.target.value)}
                     />
                   </div>
                 </Form.Group>
@@ -105,6 +133,17 @@ const RegisterModal = (props) => {
                     }}
                   />
                 </Form.Group>
+                <Form.Group as={Col} md='10' className='text-center border-1'>
+                  <Form.Control
+                    required
+                    type='text'
+                    placeholder='Cap comune di residenza'
+                    value={postalCode}
+                    onChange={(e) => {
+                      setPostalCode(e.target.value);
+                    }}
+                  />
+                </Form.Group>{" "}
               </Row>{" "}
               <div className='d-flex justify-content-center gap-4 mt-5 flex-column align-items-center'>
                 <Button type='button' className='btn-login w-50' onClick={hadnleShowSecondModal}>
@@ -121,17 +160,6 @@ const RegisterModal = (props) => {
             </div>
             <div className={!showSecondModal && "d-none"}>
               <Row id='login-form' className='mb-3 justify-content-center g-4'>
-                <Form.Group as={Col} md='10' className='text-center border-1'>
-                  <Form.Control
-                    required
-                    type='text'
-                    placeholder='Cap comune di residenza'
-                    value={cap}
-                    onChange={(e) => {
-                      setCap(e.target.value);
-                    }}
-                  />
-                </Form.Group>{" "}
                 <Form.Group as={Col} md='10' className='text-center border-1'>
                   <Form.Control
                     required
@@ -165,12 +193,27 @@ const RegisterModal = (props) => {
                     }}
                   />
                 </Form.Group>
+                <Form.Group as={Col} md='10' className='text-center border-1'>
+                  <Form.Select
+                    aria-label='Default select example'
+                    value={doctor}
+                    onChange={(e) => setDoctor(e.target.value)}
+                  >
+                    <option>Seleziona Dottore</option>
+                    {doctors &&
+                      doctors.map((doctor, index) => (
+                        <option value={doctor.doctorId} key={index}>
+                          {doctor.name + " " + doctor.surname}
+                        </option>
+                      ))}
+                  </Form.Select>
+                </Form.Group>{" "}
               </Row>
               <div className='d-flex justify-content-center gap-3 mt-5 flex-column align-items-center'>
                 <Button type='button' className='btn-login w-50' onClick={hadnleCloseSecondModal}>
                   Indietro
                 </Button>
-                <Button type='button' className='btn-login w-50'>
+                <Button type='submit' className='btn-login w-50'>
                   Invio
                 </Button>
 

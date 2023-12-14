@@ -1,9 +1,18 @@
 import { useState } from "react";
 import { Button, Col, Form, Modal, Nav, Navbar, Row } from "react-bootstrap";
 import { BsClipboardHeart, BsX } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { fetchLogin } from "../redux/actions/authenticationActions";
 const LoginModal = (props) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    dispatch(fetchLogin(email, password));
+  };
+
   return (
     <>
       <Modal size='md' show={props.show} aria-labelledby='example-modal-sizes-title-sm'>
@@ -21,7 +30,7 @@ const LoginModal = (props) => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Row id='login-form' className='mb-3 justify-content-center g-4'>
               <Form.Group as={Col} md='10' className='text-center border-1'>
                 <Form.Control
