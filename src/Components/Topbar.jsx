@@ -19,19 +19,19 @@ const Topbar = () => {
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
               <Nav className='ms-auto text-center d-flex justify-content-center align-items-center'>
-                <Nav.Link href='#home' className='text-dark fw-bold'>
+                <Nav.Link href='#home' className='text-dark '>
                   Home
                 </Nav.Link>
-                <Nav.Link href='#link' className='text-dark fw-bold'>
+                <Nav.Link href='#link' className='text-dark '>
                   Medicine
                 </Nav.Link>
-                <Nav.Link href='#link' className='text-dark fw-bold'>
+                <Nav.Link href='#link' className='text-dark '>
                   Ricette
                 </Nav.Link>
-                <Nav.Link href='#home' className='text-dark fw-bold'>
+                <Nav.Link href='#home' className='text-dark '>
                   Nuova ricetta
                 </Nav.Link>
-                <Nav.Link href='#home' className='text-white fw-bold text-decoration-none'>
+                <Nav.Link href='#home' className='text-white text-decoration-none'>
                   <Button
                     className='btn-login border-0'
                     onClick={() => {

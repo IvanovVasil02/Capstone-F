@@ -85,7 +85,6 @@ a {
   background-color: transparent;
 }
 
-
 .form-control:focus {
   box-shadow: inset;
 }
@@ -93,8 +92,6 @@ a {
 .form-control::placeholder {
   font-weight: bold;
 }
-
-
 
 .input-group-text:focus {
   box-shadow: inset;
@@ -131,5 +128,104 @@ form a:last-child {
   font-size: 1rem;
   font-weight: bold;
   border-radius: 5px;
+}
 
+#sidebar {
+  height: 100vh !important;
+}
+
+#sidebar a {
+  display: flex;
+  align-items: center;
+}
+
+#sidebar svg {
+  padding-inline-end: 2px;
+}
+
+#dashboard-header {
+  background-image: linear-gradient(#E0E0EC, #E1E1ED);
+  width: 100%;
+  height: 250px;
+  position: relative;
+  border-radius: 13px;
+  box-shadow: 0px 2px 2px grey;
+}
+
+.dashboard-img-container {
+  background-image: url(./assets/stethoscope.png);
+  background-size: cover;
+  background-position: bottom;
+  width: 50%;
+  position: absolute;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.statistics-box {
+  background-color: #E5E5EF;
+  color: #72839C;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 13px;
+  box-shadow: 0px 2px 2px grey;
+}
+
+.data-container {
+  background-color: #E5E5EF;
+  border-radius: 13px;
+  box-shadow: 0px 2px 2px grey;
+}
+
+.profile-data {
+  background-color: #72839C;
+  border-radius: 10px;
+  color: #F0F6FB;
+  font-weight: lighter;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+  border: none;
+}
+
+.card {
+  background-color: #E5E5EF !important;
+  box-shadow: 0px 2px 2px grey;
+}
+
+.card p {
+  margin-bottom: 0;
+}
+
+.card span {
+  color: #72839C;
+}
+
+#cart-prescriptions {
+  background-color: #F5EFEF !important;
+}
+
+#cart-prescriptions button {
+  background-color: #E5E5EF !important;
+  color: #72839C;
+  border: none;
+  width: 49%;
+}
+
+.contact-btn {
+  background-color: #F7F2F2 !important;
+  color: #72839C !important;
+  border: none !important;
+  border-radius: 13px;
+  box-shadow: 2px 2px 2px #72839C;
+}
+
+#appointments-container {
+  background-color: #F4F0F0;
+  border-radius: 13px;
+  box-shadow: 2px 2px 2px #888;
 }

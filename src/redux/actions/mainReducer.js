@@ -1,5 +1,5 @@
-import { SAVED_TOKEN } from "../actions/authenticationActions";
-import { GET_CURRENT_USER, GET_SELECTED_ELEMENT, LOGOUT } from "../actions/mainActions";
+import { SAVED_TOKEN } from "./authenticationActions";
+import { GET_CURRENT_USER, GET_SELECTED_ELEMENT, LOGOUT } from "./mainActions";
 
 const mainState = {
   searchResults: [],

@@ -2,8 +2,9 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
-import mainReducer from "../reducers/mainReducer";
+
 import persistStore from "redux-persist/es/persistStore";
+import mainReducer from "../actions/mainReducer";
 const persistConfig = {
   key: "root",
   storage,
