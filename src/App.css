@@ -224,8 +224,18 @@ form a:last-child {
   box-shadow: 2px 2px 2px #72839C;
 }
 
-#appointments-container {
+/* #appointments-container {
   background-color: #F4F0F0;
   border-radius: 13px;
   box-shadow: 2px 2px 2px #888;
+} */
+
+.appointmet-card {
+  background-color: #E5E5EF;
+  border-radius: 12px;
+
+}
+
+.appointmet-card p {
+  margin-bottom: 0;
 }

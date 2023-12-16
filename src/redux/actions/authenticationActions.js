@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
-import { GET_CURRENT_USER } from "./mainActions";
+import { GET_CURRENT_USER, fetchUserPrescription } from "./mainActions";
 
-export const SAVED_TOKEN = "SAVE_TOKEN";
+export const SAVED_TOKEN = "SAVED_TOKEN";
 
 export const fetchLogin = (email, password) => {
   return async (dispatch) => {
@@ -73,7 +73,6 @@ export const registerUser = (
 };
 
 export const getUserProfile = (token) => {
-  console.log(token);
   return async (dispatch) => {
     try {
       const decodedToken = jwtDecode(token);
@@ -82,7 +81,6 @@ export const getUserProfile = (token) => {
       if (!decodedToken) {
         throw new Error("Decodifica del token fallita");
       }
-      console.log(role);
 
       if (role === "DOCTOR") {
         const resp = await fetch("http://localhost:3001/doctors/me", {

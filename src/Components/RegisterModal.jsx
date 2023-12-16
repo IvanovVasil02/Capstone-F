@@ -20,7 +20,9 @@ const RegisterModal = (props) => {
   const [showSecondModal, setShowSecondModal] = useState(false);
 
   const hadnleCloseSecondModal = () => setShowSecondModal(false);
-  const hadnleShowSecondModal = () => setShowSecondModal(true);
+  const hadnleShowSecondModal = () => {
+    setShowSecondModal(true);
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
