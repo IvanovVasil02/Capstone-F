@@ -1,5 +1,11 @@
 import { SAVED_TOKEN } from "../actions/authenticationActions";
-import { GET_CURRENT_USER, GET_PRESCRIPTIONS_LIST, GET_SELECTED_ELEMENT } from "../actions/mainActions";
+import {
+  GET_APPOINTMENTS_LIST,
+  GET_CURRENT_USER,
+  GET_PRESCRIPTIONS_LIST,
+  GET_SEARCH_RESULTS,
+  GET_SELECTED_ELEMENT,
+} from "../actions/mainActions";
 
 const mainState = {
   searchResults: [],
@@ -8,6 +14,7 @@ const mainState = {
   savedToken: null,
   currentUser: null,
   prescriptionList: [],
+  appointmentsList: [],
 };
 
 const mainReducer = (state = mainState, action) => {
@@ -31,6 +38,16 @@ const mainReducer = (state = mainState, action) => {
       return {
         ...state,
         prescriptionList: action.payload,
+      };
+    case GET_APPOINTMENTS_LIST:
+      return {
+        ...state,
+        appointmentsList: action.payload,
+      };
+    case GET_SEARCH_RESULTS:
+      return {
+        ...state,
+        searchResults: action.payload,
       };
 
     case "LOGOUT":

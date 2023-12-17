@@ -1,8 +1,18 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import AppointmentCard from "./AppointmentCard";
 import Sidebar from "./Sidebar";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const PatientAppointments = () => {
+  const appointments = useSelector((state) => state.main.appointmentsList);
+  const [appointmentList, setAppointmentList] = useState([]);
+
+  useEffect(() => {
+    if (appointments) {
+      setAppointmentList(appointments.content);
+    }
+  }, [appointments]);
   return (
     <>
       <Container fluid>
@@ -27,12 +37,8 @@ const PatientAppointments = () => {
               </Col>
             </Row>
             <Row className='py-3 gap-2'>
-              <AppointmentCard />
-              <AppointmentCard />
-              <AppointmentCard />
-              <AppointmentCard />
-              <AppointmentCard />
-              <AppointmentCard />
+              {appointments &&
+                appointmentList.map((appointment, index) => <AppointmentCard data={appointment} key={index} />)}
             </Row>
           </Col>
         </Row>

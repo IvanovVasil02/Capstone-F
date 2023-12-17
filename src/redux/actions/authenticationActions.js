@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import { GET_CURRENT_USER, fetchUserPrescription } from "./mainActions";
+import { GET_CURRENT_USER } from "./mainActions";
 
 export const SAVED_TOKEN = "SAVED_TOKEN";
 

@@ -2,21 +2,32 @@ import { Col, Container, Row } from "react-bootstrap";
 import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchUserPrescription } from "../../redux/actions/mainActions";
+import { fetchUserAppointments, fetchUserPrescription } from "../../redux/actions/mainActions";
 
 const PatientDashboard = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.main.currentUser);
   const token = useSelector((state) => state.main.savedToken);
   const prescriptions = useSelector((state) => state.main.prescriptionList.content);
-  const approvedPrescriptions = prescriptions.filter((word) => word.status === "APPROVATA");
-  const pendingPrescriptions = prescriptions.filter((word) => word.status !== "APPROVATA");
+  const [approvedPrescriptions, setApprovedPrescriptions] = useState([]);
+  const [pendingPrescriptions, setPendingPrescriptions] = useState([]);
+  const appointments = useSelector((state) => state.main.appointmentsList);
+  const [appointmentList, setAppointmentList] = useState([]);
 
   useEffect(() => {
     if (token) {
       dispatch(fetchUserPrescription(token));
+      dispatch(fetchUserAppointments(token));
     }
   }, [currentUser, token, dispatch]);
+
+  useEffect(() => {
+    if (prescriptions && appointments) {
+      setApprovedPrescriptions(prescriptions.filter((prescription) => prescription.status === "APPROVATA"));
+      setPendingPrescriptions(prescriptions.filter((prescription) => prescription.status !== "APPROVATA"));
+      setAppointmentList(appointments.content);
+    }
+  }, [prescriptions, appointments]);
 
   return (
     currentUser !== null &&
@@ -64,7 +75,7 @@ const PatientDashboard = () => {
                       src='https://img.icons8.com/ios/50/72839c/tear-off-calendar--v1.png'
                       alt='tear-off-calendar--v1'
                     />
-                    <h5 className='text-dark'>56</h5>
+                    <h5 className='text-dark'>{appointmentList && appointmentList.length}</h5>
                   </div>
                 </Col>
                 <Col className='p-0'>
