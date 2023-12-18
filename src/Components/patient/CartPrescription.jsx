@@ -1,11 +1,12 @@
 import { Button, Card } from "react-bootstrap";
 import CartItem from "./CartItem";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart, sendPrescriptionRequest } from "../../redux/actions/patientActions";
 
 const CartPrescription = () => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.main.savedToken);
   const cartPrescription = useSelector((state) => state.patient.cartPrescription);
-
   return (
     <>
       <div className='p-0 py-2'>
@@ -16,7 +17,7 @@ const CartPrescription = () => {
           </Card.Body>
 
           <div className='d-flex justify-content-between p-3'>
-            <Button type='Submit'>
+            <Button type='button' onClick={() => dispatch(sendPrescriptionRequest(token, cartPrescription))}>
               <img
                 width='25'
                 height='25'
@@ -25,7 +26,7 @@ const CartPrescription = () => {
               />
               Invio
             </Button>{" "}
-            <Button type='Submit'>
+            <Button type='Submit' onClick={() => dispatch(clearCart())}>
               <img width='25' height='25' src='https://img.icons8.com/ios-filled/50/72839c/multiply.png' alt='remove' />
               Anulla
             </Button>

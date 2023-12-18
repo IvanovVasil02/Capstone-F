@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addMedicine } from "../../redux/actions/patientActions";
+import { addMedicine, removeMedcine } from "../../redux/actions/patientActions";
 
 const CartItem = ({ data }) => {
   const dispatch = useDispatch();
@@ -9,8 +9,11 @@ const CartItem = ({ data }) => {
       medicine,
       quantity: 1,
     };
-
     dispatch(addMedicine(medicineObject));
+  };
+
+  const handleRemoveBtn = (medicine) => {
+    dispatch(removeMedcine(medicine));
   };
   return (
     <>
@@ -29,7 +32,13 @@ const CartItem = ({ data }) => {
             alt='add--v1'
             onClick={() => handleAddBtn(data.medicine)}
           />
-          <img width='30' height='30' src='https://img.icons8.com/ios/50/72839c/minus.png' alt='minus' />
+          <img
+            width='30'
+            height='30'
+            src='https://img.icons8.com/ios/50/72839c/minus.png'
+            alt='minus'
+            onClick={() => handleRemoveBtn(data.medicine.medicineId)}
+          />
         </div>
       </div>
       <hr />
