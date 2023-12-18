@@ -2,13 +2,14 @@ import { Col, Container, Row } from "react-bootstrap";
 import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchUserAppointments, fetchUserPrescription } from "../../redux/actions/mainActions";
+import { fetchUserPrescription } from "../../redux/actions/patientActions";
+import { fetchUserAppointments } from "../../redux/actions/mainActions";
 
 const PatientDashboard = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.main.currentUser);
   const token = useSelector((state) => state.main.savedToken);
-  const prescriptions = useSelector((state) => state.main.prescriptionList.content);
+  const prescriptions = useSelector((state) => state.patient.prescriptionList.content);
   const [approvedPrescriptions, setApprovedPrescriptions] = useState([]);
   const [pendingPrescriptions, setPendingPrescriptions] = useState([]);
   const appointments = useSelector((state) => state.main.appointmentsList);

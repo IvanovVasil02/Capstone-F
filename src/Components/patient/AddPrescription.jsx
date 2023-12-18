@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSearch } from "../../redux/actions/mainActions";
+
 const AddPrescription = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.main.savedToken);
@@ -17,13 +18,14 @@ const AddPrescription = () => {
   ];
   const searchResults = useSelector((state) => state.main.searchResults.content);
 
-  const handleSubmit = (evt) => {
+  const handleSubmitSearch = (evt) => {
     evt.preventDefault();
     dispatch(fetchSearch(token, search, radioValue));
   };
 
   useEffect(() => {
     dispatch(fetchSearch(token, search, radioValue));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [radioValue]);
 
   return (
@@ -42,7 +44,7 @@ const AddPrescription = () => {
                       Qui troverai tutte le informazioni relative alla tua salute e ai tuoi appuntamenti. Siamo qui per
                       rendere il tuo percorso di cura più accessibile e informativo.
                     </h6>
-                    <Form onSubmit={handleSubmit} className='d-flex p-3' id='search-form'>
+                    <Form onSubmit={handleSubmitSearch} className='d-flex p-3' id='search-form'>
                       <Form.Control
                         type='input'
                         placeholder='Cerca medicina'

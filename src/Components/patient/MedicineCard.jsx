@@ -1,6 +1,18 @@
 import { Card } from "react-bootstrap";
+import { addMedicine } from "../../redux/actions/patientActions";
+import { useDispatch } from "react-redux";
 
 const MedicineCard = ({ data }) => {
+  const dispatch = useDispatch();
+
+  const handleMedicine = (medicine) => {
+    const medicineObject = {
+      medicine: medicine,
+      quantity: 1,
+    };
+
+    dispatch(addMedicine(medicineObject));
+  };
   return (
     <>
       <div className='p-0 py-2'>
@@ -25,6 +37,7 @@ const MedicineCard = ({ data }) => {
                 height='30'
                 src='https://img.icons8.com/ios/50/72839c/plus-2-math.png'
                 alt='plus-2-math'
+                onClick={() => handleMedicine(data)}
               />
               <span>€ {data.publicPrice}</span>
             </div>

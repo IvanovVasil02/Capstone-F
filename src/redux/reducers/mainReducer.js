@@ -2,7 +2,6 @@ import { SAVED_TOKEN } from "../actions/authenticationActions";
 import {
   GET_APPOINTMENTS_LIST,
   GET_CURRENT_USER,
-  GET_PRESCRIPTIONS_LIST,
   GET_SEARCH_RESULTS,
   GET_SELECTED_ELEMENT,
 } from "../actions/mainActions";
@@ -13,7 +12,6 @@ const mainState = {
   isAuthenticated: false,
   savedToken: null,
   currentUser: null,
-  prescriptionList: [],
   appointmentsList: [],
 };
 
@@ -33,11 +31,6 @@ const mainReducer = (state = mainState, action) => {
       return {
         ...state,
         currentUser: action.payload,
-      };
-    case GET_PRESCRIPTIONS_LIST:
-      return {
-        ...state,
-        prescriptionList: action.payload,
       };
     case GET_APPOINTMENTS_LIST:
       return {

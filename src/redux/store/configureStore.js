@@ -3,6 +3,7 @@ import storage from "redux-persist/lib/storage";
 import mainReducer from "../reducers/mainReducer";
 import { persistReducer, persistStore } from "redux-persist";
 import { encryptTransform } from "redux-persist-transform-encrypt";
+import patientReducer from "../reducers/patientReducer";
 
 const persistConfig = {
   key: "root",
@@ -16,6 +17,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   main: mainReducer,
+  patient: patientReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

@@ -1,17 +1,17 @@
 export const GET_PRESCRIPTIONS_LIST = "GET_PRESCRIPTIONS_LIST";
-export const ADD_MEDICINE_TO_PRESCRIPTION = "GET_CART_PRESCRIPTION";
-export const REMOVE_MEDICINE_TO_PRESCRIPTION = "GET_CART_PRESCRIPTION";
+export const ADD_MEDICINE_TO_PRESCRIPTION = "ADD_MEDICINE_TO_PRESCRIPTION";
+export const REMOVE_MEDICINE_FROM_PRESCRIPTION = "REMOVE_MEDICINE_FROM_PRESCRIPTION";
 
 // ---------------------------------ADD MEDICINE----------------------------------
 
-export const addMedicine = (data) => {
-  (dispatch) => dispatch({ type: ADD_MEDICINE_TO_PRESCRIPTION, payload: data });
+export const addMedicine = (data) => (dispatch) => {
+  dispatch({ type: ADD_MEDICINE_TO_PRESCRIPTION, payload: data });
 };
 
 // ---------------------------------REMOVE MEDICINE----------------------------------
 
 export const removeMedcine = (data) => {
-  (dispatch) => dispatch({ type: REMOVE_MEDICINE_TO_PRESCRIPTION, payload: data });
+  (dispatch) => dispatch({ type: REMOVE_MEDICINE_FROM_PRESCRIPTION, payload: data });
 };
 
 // ---------------------------------PRESCRIPTIONS----------------------------------
