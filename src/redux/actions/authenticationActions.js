@@ -1,6 +1,8 @@
-import { getUserProfile } from "./mainActions";
-
+import { jwtDecode } from "jwt-decode";
+export const GET_CURRENT_USER = "GET_CURRENT_USER";
 export const SAVED_TOKEN = "SAVED_TOKEN";
+
+// ---------------------------------LOGIN USER----------------------------------
 
 export const fetchLogin = (email, password) => {
   return async (dispatch) => {
@@ -26,6 +28,8 @@ export const fetchLogin = (email, password) => {
     }
   };
 };
+
+// ---------------------------------REGISTER USER----------------------------------
 
 export const registerUser = (
   name,
@@ -67,6 +71,45 @@ export const registerUser = (
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+};
+
+// ---------------------------------GET USER----------------------------------
+
+export const getUserProfile = (token) => {
+  return async (dispatch) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      const role = decodedToken.role;
+
+      if (!decodedToken) {
+        throw new Error("Decodifica del token fallita");
+      }
+
+      if (role === "DOCTOR") {
+        const resp = await fetch("http://localhost:3001/doctors/me", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          dispatch({ type: GET_CURRENT_USER, payload: data });
+        }
+      } else if (role === "PATIENT") {
+        const resp = await fetch("http://localhost:3001/patients/me", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          dispatch({ type: GET_CURRENT_USER, payload: data });
+        }
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 };

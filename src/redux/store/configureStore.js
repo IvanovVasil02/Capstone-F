@@ -3,7 +3,10 @@ import storage from "redux-persist/lib/storage";
 import mainReducer from "../reducers/mainReducer";
 import { persistReducer, persistStore } from "redux-persist";
 import { encryptTransform } from "redux-persist-transform-encrypt";
-import patientReducer from "../reducers/patientReducer";
+import authenticationReducer from "../reducers/authenticatinoReducer";
+import prescriptionReducer from "../reducers/prescriptionReducer";
+import appointmentsReducer from "../reducers/appointmentsReducer";
+import doctorReducer from "../reducers/doctorReducer";
 
 const persistConfig = {
   key: "root",
@@ -17,7 +20,10 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   main: mainReducer,
-  patient: patientReducer,
+  user: authenticationReducer,
+  prescriptions: prescriptionReducer,
+  appointments: appointmentsReducer,
+  doctor: doctorReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

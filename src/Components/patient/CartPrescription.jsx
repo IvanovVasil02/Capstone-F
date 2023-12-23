@@ -1,12 +1,12 @@
 import { Button, Card } from "react-bootstrap";
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, sendPrescriptionRequest } from "../../redux/actions/patientActions";
+import { clearCart, sendPrescriptionRequest } from "../../redux/actions/prescriptionsActions";
 
 const CartPrescription = () => {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.main.savedToken);
-  const cartPrescription = useSelector((state) => state.patient.cartPrescription);
+  const token = useSelector((state) => state.user.savedToken);
+  const cartPrescription = useSelector((state) => state.prescriptions.cartPrescription);
   return (
     <>
       <div className='p-0 py-2'>

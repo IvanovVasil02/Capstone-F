@@ -1,18 +1,8 @@
-import { SAVED_TOKEN } from "../actions/authenticationActions";
-import {
-  GET_APPOINTMENTS_LIST,
-  GET_CURRENT_USER,
-  GET_SEARCH_RESULTS,
-  GET_SELECTED_ELEMENT,
-} from "../actions/mainActions";
-
+import { GET_SEARCH_MEDICINE_RESULTS, GET_SEARCH_PATIENT_RESULTS, GET_SELECTED_ELEMENT } from "../actions/mainActions";
 const mainState = {
-  searchResults: [],
+  searchMedicineResults: [],
+  searchPatientResults: [],
   selectedElement: null,
-  isAuthenticated: false,
-  savedToken: null,
-  currentUser: null,
-  appointmentsList: [],
 };
 
 const mainReducer = (state = mainState, action) => {
@@ -22,31 +12,17 @@ const mainReducer = (state = mainState, action) => {
         ...state,
         selectedElement: action.payload,
       };
-    case SAVED_TOKEN:
+    case GET_SEARCH_MEDICINE_RESULTS:
       return {
         ...state,
-        savedToken: action.payload,
+        searchMedicineResults: action.payload,
       };
-    case GET_CURRENT_USER:
+    case GET_SEARCH_PATIENT_RESULTS:
       return {
         ...state,
-        currentUser: action.payload,
-      };
-    case GET_APPOINTMENTS_LIST:
-      return {
-        ...state,
-        appointmentsList: action.payload,
-      };
-    case GET_SEARCH_RESULTS:
-      return {
-        ...state,
-        searchResults: action.payload,
+        searchPatientResults: action.payload,
       };
 
-    case "LOGOUT":
-      return {
-        ...mainState,
-      };
     default:
       return state;
   }

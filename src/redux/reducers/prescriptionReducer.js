@@ -3,14 +3,13 @@ import {
   GET_PRESCRIPTIONS_LIST,
   REMOVE_MEDICINE_FROM_PRESCRIPTION,
   RESET_CART_PRESCRIPTION,
-} from "../actions/patientActions";
+} from "../actions/prescriptionsActions";
 
-const patientState = {
+const prescriptionState = {
   prescriptionList: [],
   cartPrescription: [],
 };
-
-const patientReducer = (state = patientState, action) => {
+const prescriptionReducer = (state = prescriptionState, action) => {
   switch (action.type) {
     case GET_PRESCRIPTIONS_LIST:
       return {
@@ -73,4 +72,5 @@ const patientReducer = (state = patientState, action) => {
       return state;
   }
 };
-export default patientReducer;
+
+export default prescriptionReducer;

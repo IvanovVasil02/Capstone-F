@@ -5,12 +5,14 @@ import { MdOutlineEditCalendar } from "react-icons/md";
 import { MdOutlineMedicalServices } from "react-icons/md";
 import { BsJournalMedical } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { BsPeople } from "react-icons/bs";
 // import { useDispatch } from "react-redux";
 // import { LOGOUT } from "../../redux/actions/authenticationActions";
 
 const Sidebar = () => {
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
+  const role = useSelector((state) => state.user.currentUser.role);
 
   const handlelogout = () => {
     // dispatch(LOGOUT);
@@ -28,10 +30,17 @@ const Sidebar = () => {
           </Navbar.Brand>
           <hr />
           <Nav.Item className='text-dark fw-medium '>
-            <Link to='/dashboard' className='nav-link'>
-              <AiOutlineHome />
-              Home
-            </Link>
+            {role !== "DOCTOR" ? (
+              <Link to='/dashboard' className='nav-link'>
+                <AiOutlineHome />
+                Home
+              </Link>
+            ) : (
+              <Link to='/doc-dashboard' className='nav-link'>
+                <AiOutlineHome />
+                Home
+              </Link>
+            )}
           </Nav.Item>
           <hr />{" "}
           <Nav.Item className='text-dark fw-medium'>
@@ -53,6 +62,15 @@ const Sidebar = () => {
               Nova ricetta
             </Link>
           </Nav.Item>
+          <hr />
+          {role === "DOCTOR" && (
+            <Nav.Item className='text-dark fw-medium'>
+              <Link to='/patients' className='nav-link'>
+                <BsPeople />
+                Pazienti
+              </Link>
+            </Nav.Item>
+          )}
           <hr />
         </div>
         <div>

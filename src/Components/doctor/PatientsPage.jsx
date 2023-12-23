@@ -1,48 +1,46 @@
 import { Button, ButtonGroup, Col, Container, Form, Row, ToggleButton } from "react-bootstrap";
-import { FaSearch } from "react-icons/fa";
-import MedicineCard from "./MedicineCard";
-import CartPrescription from "./CartPrescription";
 import Sidebar from "../Sidebar";
-import { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSearchMedicine } from "../../redux/actions/mainActions";
+import { useEffect, useState } from "react";
+import { fetchSearchPatient } from "../../redux/actions/mainActions";
+import PatientCard from "./PatientCard";
 
-const AddPrescription = () => {
+const PatientsPage = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.savedToken);
   const [search, setSearch] = useState("");
-  const [radioValue, setRadioValue] = useState("medicineName");
+  const [radioValue, setRadioValue] = useState("name");
   const radios = [
-    { name: "Nome commerciale", value: "medicineName" },
-    { name: "Principio attivo", value: "activeIngredient" },
+    { name: "Nome", value: "name" },
+    { name: "Codice fiscale", value: "fiscalCode" },
   ];
-  const searchResults = useSelector((state) => state.main.searchMedicineResults.content);
+  const searchResults = useSelector((state) => state.main.searchPatientResults.content);
 
   const handleSubmitSearch = (evt) => {
     evt.preventDefault();
-    dispatch(fetchSearchMedicine(token, search, radioValue));
+    dispatch(fetchSearchPatient(token, search, radioValue));
   };
 
   useEffect(() => {
-    dispatch(fetchSearchMedicine(token, search, radioValue));
+    dispatch(fetchSearchPatient(token, search, radioValue));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [radioValue]);
-
   return (
     <>
       <Container fluid>
         <Row>
           <Sidebar />
-          <Col md={10} className='p-4'>
-            <Row className='sticky-top'>
+          <Col md={10}>
+            <Row>
               <Col md={12} id='dashboard-header' className='p-0'>
                 <div className='dashboard-img-container'></div>
-                <div className='w-100 p-4'>
+                <div className='w-100 p-5'>
                   <div className='d-flex flex-column align-items-center offset-2'>
-                    <h3 className='fw-light mb-2'>Benvenuta nella tua dashboard , Pina Miteva</h3>
-                    <h6 className='w-75 text-center'>
-                      Qui troverai tutte le informazioni relative alla tua salute e ai tuoi appuntamenti. Siamo qui per
-                      rendere il tuo percorso di cura più accessibile e informativo.
+                    <h3 className='fw-light mb-4'>Gestione Pazienti</h3>
+                    <h6 className='w-50 text-center'>
+                      Benvenuto nella sezione di ricerca pazienti. Utilizza la barra di ricerca qui sotto per trovare
+                      rapidamente le informazioni sui pazienti.
                     </h6>
                     <Form onSubmit={handleSubmitSearch} className='d-flex p-3' id='search-form'>
                       <Form.Control
@@ -61,7 +59,7 @@ const AddPrescription = () => {
               </Col>
             </Row>
             <Row className='py-2'>
-              <Col md={7} className='p-0 pe-3'>
+              <Col md={12} className='p-0 pe-3'>
                 <div>
                   <ButtonGroup>
                     {radios.map((radio, idx) => (
@@ -80,10 +78,7 @@ const AddPrescription = () => {
                     ))}
                   </ButtonGroup>
                 </div>
-                {searchResults && searchResults.map((medicine, index) => <MedicineCard data={medicine} key={index} />)}
-              </Col>{" "}
-              <Col md={5} className='p-0 '>
-                <CartPrescription />
+                {searchResults && searchResults.map((medicine, index) => <PatientCard data={medicine} key={index} />)}
               </Col>
             </Row>
           </Col>
@@ -92,4 +87,4 @@ const AddPrescription = () => {
     </>
   );
 };
-export default AddPrescription;
+export default PatientsPage;

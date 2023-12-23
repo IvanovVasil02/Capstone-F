@@ -1,24 +1,35 @@
 import { Col, Container, Row } from "react-bootstrap";
-import Sidebar from "../Sidebar";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchUserPrescription as fetchUserPrescriptions } from "../../redux/actions/prescriptionsActions";
-import { fetchUserAppointments } from "../../redux/actions/appointmentActions";
-// import io from "socket.io-client";
 
-const PatientDashboard = () => {
+import Sidebar from "../Sidebar";
+import { fetchUserPrescription } from "../../redux/actions/prescriptionsActions";
+import { fetchUserAppointments } from "../../redux/actions/appointmentActions";
+import { fetchPatientList } from "../../redux/actions/patientsDoctorActions";
+
+const DoctorDashboard = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   const token = useSelector((state) => state.user.savedToken);
+  const patients = useSelector((state) => state.doctor.patientList.totalElements);
   const prescriptions = useSelector((state) => state.prescriptions.prescriptionList.page.totalElements);
   const pendingPrescriptions = useSelector((state) => state.prescriptions.prescriptionList.pending);
   const appointments = useSelector((state) => state.appointments.appointmentsList.page.totalElements);
 
   useEffect(() => {
     if (token) {
-      dispatch(fetchUserPrescriptions(token));
+      dispatch(fetchUserPrescription(token));
+      dispatch(fetchPatientList(token));
       dispatch(fetchUserAppointments(token));
     }
+    const intervalId = setInterval(() => {
+      dispatch(fetchUserPrescription(token));
+      dispatch(fetchUserAppointments(token));
+      dispatch(fetchPatientList(token));
+    }, 120000);
+
+    return () => clearInterval(intervalId);
   }, [currentUser, token, dispatch]);
 
   return (
@@ -48,16 +59,17 @@ const PatientDashboard = () => {
               <Row className='column-gap-4 py-4'>
                 <Col className='p-0'>
                   <div className='statistics-box'>
-                    <h5>Ricette</h5>
+                    <h5>Pazienti</h5>
                     <img
                       width='50'
                       height='50'
-                      src='https://img.icons8.com/ios/50/72839c/treatment-plan--v1.png'
-                      alt='treatment-plan--v1'
+                      src='https://img.icons8.com/ios/50/72839c/conference-background-selected.png'
+                      alt='conference-background-selected'
                     />
-                    <h5 className='text-dark'>{prescriptions}</h5>
+                    <h5 className='text-dark'>{patients}</h5>
                   </div>
                 </Col>
+
                 <Col className='p-0'>
                   <div className='statistics-box'>
                     <h5>Appuntamenti</h5>
@@ -68,6 +80,18 @@ const PatientDashboard = () => {
                       alt='tear-off-calendar--v1'
                     />
                     <h5 className='text-dark'>{appointments}</h5>
+                  </div>
+                </Col>
+                <Col className='p-0'>
+                  <div className='statistics-box'>
+                    <h5>Ricette</h5>
+                    <img
+                      width='50'
+                      height='50'
+                      src='https://img.icons8.com/ios/50/72839c/treatment-plan--v1.png'
+                      alt='treatment-plan--v1'
+                    />
+                    <h5 className='text-dark'>{prescriptions}</h5>
                   </div>
                 </Col>
                 <Col className='p-0'>
@@ -109,31 +133,6 @@ const PatientDashboard = () => {
                     <p>{currentUser.email}</p>
                   </div>
                 </Col>
-                <Col className='profile-data p-2'>
-                  <div className='d-flex justify-content-center p-4'>
-                    <h5>Il mio dottore</h5>
-                  </div>
-                  <div className='d-flex justify-content-between'>
-                    <p>Nome e cognome:</p>
-                    <p>{currentUser.doctor.name + " " + currentUser.doctor.surname}</p>
-                  </div>{" "}
-                  <div className='d-flex justify-content-between'>
-                    <p>Data di nascita:</p>
-                    <p>{currentUser.doctor.birthDate}</p>
-                  </div>
-                  <div className='d-flex justify-content-between'>
-                    <p>Indirizzo:</p>
-                    <p>{currentUser.doctor.address}</p>
-                  </div>
-                  <div className='d-flex justify-content-between'>
-                    <p>Recapito telefonico:</p>
-                    <p>{currentUser.doctor.phoneNumber}</p>
-                  </div>
-                  <div className='d-flex justify-content-between'>
-                    <p>Email:</p>
-                    <p>{currentUser.doctor.email}</p>
-                  </div>
-                </Col>
               </Row>
             </Col>
           </Row>
@@ -142,4 +141,4 @@ const PatientDashboard = () => {
     )
   );
 };
-export default PatientDashboard;
+export default DoctorDashboard;

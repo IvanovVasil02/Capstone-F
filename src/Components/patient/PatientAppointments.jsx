@@ -1,11 +1,14 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import AppointmentCard from "./AppointmentCard";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { askAppointment } from "../../redux/actions/appointmentActions";
 
 const PatientAppointments = () => {
-  const appointments = useSelector((state) => state.main.appointmentsList);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.savedToken);
+  const appointments = useSelector((state) => state.appointments.appointmentsList);
   const [appointmentList, setAppointmentList] = useState([]);
 
   useEffect(() => {
@@ -29,7 +32,13 @@ const PatientAppointments = () => {
                       Benvenuto nella nostra sezione dedicata alle prenotazioni! Qui puoi gestire i tuoi appuntamenti e
                       richiedere nuove visite mediche in modo rapido e semplice.
                     </h6>
-                    <Button className='contact-btn' type='button'>
+                    <Button
+                      className='contact-btn'
+                      type='button'
+                      onClick={() => {
+                        dispatch(askAppointment(token));
+                      }}
+                    >
                       Richiedi orario
                     </Button>
                   </div>
