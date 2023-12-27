@@ -30,7 +30,7 @@ const DoctorDashboard = () => {
     }, 120000);
 
     return () => clearInterval(intervalId);
-  }, [currentUser, token, dispatch]);
+  }, [token, dispatch]);
 
   return (
     currentUser !== null &&
@@ -56,6 +56,7 @@ const DoctorDashboard = () => {
                   </div>
                 </Col>
               </Row>
+
               <Row className='column-gap-4 py-4'>
                 <Col className='p-0'>
                   <div className='statistics-box'>

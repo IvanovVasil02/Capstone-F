@@ -7,6 +7,7 @@ import PatientAppointments from "./Components/patient/PatientAppointments";
 import AddPrescription from "./Components/patient/AddPrescription";
 import DoctorDashboard from "./Components/doctor/DoctorDashboard";
 import PatientsPage from "./Components/doctor/PatientsPage";
+import PrescriptionPage from "./Components/doctor/PrescriptionPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/addPrescription' element={<AddPrescription />} />
           <Route path='/doc-dashboard' element={<DoctorDashboard />} />{" "}
           <Route path='/patients' element={<PatientsPage />} />
+          <Route path='/prescriptions' element={<PrescriptionPage />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -3,8 +3,8 @@ import Sidebar from "../Sidebar";
 import { FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchSearchPatient } from "../../redux/actions/mainActions";
 import PatientCard from "./PatientCard";
+import { fetchSearchPatient } from "../../redux/actions/patientsDoctorActions";
 
 const PatientsPage = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const PatientsPage = () => {
     { name: "Nome", value: "name" },
     { name: "Codice fiscale", value: "fiscalCode" },
   ];
-  const searchResults = useSelector((state) => state.main.searchPatientResults.content);
+  const searchResults = useSelector((state) => state.doctor.searchPatientResults.content);
 
   const handleSubmitSearch = (evt) => {
     evt.preventDefault();
@@ -59,13 +59,13 @@ const PatientsPage = () => {
               </Col>
             </Row>
             <Row className='py-2'>
-              <Col md={12} className='p-0 pe-3'>
+              <Col md={6} className='p-0 pe-3'>
                 <div>
                   <ButtonGroup>
-                    {radios.map((radio, idx) => (
+                    {radios.map((radio) => (
                       <ToggleButton
-                        key={idx}
-                        id={`radio-${idx}`}
+                        key={radio.value}
+                        id={`radio-${radio.value}`}
                         type='radio'
                         name='radio'
                         variant='outline-secondary'
@@ -78,7 +78,7 @@ const PatientsPage = () => {
                     ))}
                   </ButtonGroup>
                 </div>
-                {searchResults && searchResults.map((medicine, index) => <PatientCard data={medicine} key={index} />)}
+                {searchResults && searchResults.map((patient) => <PatientCard key={patient.id} data={patient} />)}
               </Col>
             </Row>
           </Col>

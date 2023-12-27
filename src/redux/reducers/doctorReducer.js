@@ -1,7 +1,8 @@
-import { GET_PATIENT_LIST } from "../actions/patientsDoctorActions";
+import { GET_PATIENT_LIST, GET_SEARCH_PATIENT_RESULTS } from "../actions/patientsDoctorActions";
 
 const doctorState = {
   patientList: [],
+  searchPatientResults: [],
 };
 
 const doctorReducer = (state = doctorState, action) => {
@@ -10,6 +11,11 @@ const doctorReducer = (state = doctorState, action) => {
       return {
         ...state,
         patientList: action.payload,
+      };
+    case GET_SEARCH_PATIENT_RESULTS:
+      return {
+        ...state,
+        searchPatientResults: action.payload,
       };
 
     default:

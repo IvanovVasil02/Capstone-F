@@ -1,21 +1,14 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import AppointmentCard from "./AppointmentCard";
 import Sidebar from "../Sidebar";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { askAppointment } from "../../redux/actions/appointmentActions";
 
 const PatientAppointments = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.savedToken);
-  const appointments = useSelector((state) => state.appointments.appointmentsList);
-  const [appointmentList, setAppointmentList] = useState([]);
+  const appointments = useSelector((state) => state.appointments.appointmentsList.page.content);
 
-  useEffect(() => {
-    if (appointments) {
-      setAppointmentList(appointments.content);
-    }
-  }, [appointments]);
   return (
     <>
       <Container fluid>
@@ -47,7 +40,7 @@ const PatientAppointments = () => {
             </Row>
             <Row className='py-3 gap-2'>
               {appointments &&
-                appointmentList.map((appointment, index) => <AppointmentCard data={appointment} key={index} />)}
+                appointments.map((appointment) => <AppointmentCard data={appointment} key={appointment.id} />)}
             </Row>
           </Col>
         </Row>

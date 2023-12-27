@@ -50,7 +50,7 @@ const Sidebar = () => {
           </Nav.Item>
           <hr />{" "}
           <Nav.Item className='text-dark fw-medium'>
-            <Link className='nav-link'>
+            <Link to='/prescriptions' className='nav-link'>
               <BsJournalMedical />
               Ricette
             </Link>

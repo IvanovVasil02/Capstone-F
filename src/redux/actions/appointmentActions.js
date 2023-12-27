@@ -46,6 +46,7 @@ export const askAppointment = (token) => {
   return async () => {
     try {
       const resp = await fetch("http://localhost:3001/patients/askAppointment", {
+        method: "POST",
         headers: {
           Authorization: "Bearer " + token,
         },

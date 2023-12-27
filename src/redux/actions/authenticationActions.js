@@ -1,4 +1,7 @@
 import { jwtDecode } from "jwt-decode";
+import { fetchUserPrescription } from "./prescriptionsActions";
+import { fetchPatientList } from "./patientsDoctorActions";
+import { fetchUserAppointments } from "./appointmentActions";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
 export const SAVED_TOKEN = "SAVED_TOKEN";
 
@@ -22,6 +25,9 @@ export const fetchLogin = (email, password) => {
         const resp = await response.json();
         await dispatch({ type: SAVED_TOKEN, payload: resp.token });
         dispatch(getUserProfile(resp.token));
+        dispatch(fetchUserPrescription(resp.token));
+        dispatch(fetchPatientList(resp.token));
+        dispatch(fetchUserAppointments(resp.token));
       }
     } catch (error) {
       console.log(error);
