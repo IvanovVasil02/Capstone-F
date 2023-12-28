@@ -16,6 +16,10 @@ const dataCard = ({ data }) => {
                 <p>{data.birthDate}</p>
               </div>
               <div className='d-flex'>
+                <p className='pe-2'>Codice fiscale:</p>
+                <p>{data.fiscalCode}</p>
+              </div>{" "}
+              <div className='d-flex'>
                 <p className='pe-2'>Indirizzo:</p>
                 <p>{data.address}</p>
               </div>

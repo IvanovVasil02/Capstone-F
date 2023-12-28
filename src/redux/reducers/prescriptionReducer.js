@@ -1,5 +1,6 @@
 import {
   ADD_MEDICINE_TO_PRESCRIPTION,
+  GET_PENDING_PRESCRIPTIONS,
   GET_PRESCRIPTIONS_LIST,
   REMOVE_MEDICINE_FROM_PRESCRIPTION,
   RESET_CART_PRESCRIPTION,
@@ -7,6 +8,7 @@ import {
 
 const prescriptionState = {
   prescriptionList: [],
+  pendingPrescriptions: [],
   cartPrescription: [],
 };
 const prescriptionReducer = (state = prescriptionState, action) => {
@@ -68,6 +70,12 @@ const prescriptionReducer = (state = prescriptionState, action) => {
         return state;
       }
     }
+
+    case GET_PENDING_PRESCRIPTIONS:
+      return {
+        ...state,
+        pendingPrescriptions: action.payload,
+      };
     default:
       return state;
   }

@@ -239,3 +239,7 @@ form a:last-child {
 .appointmet-card p {
   margin-bottom: 0;
 }
+
+svg {
+  width: 100%;
+}

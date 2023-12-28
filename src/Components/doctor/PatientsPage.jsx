@@ -78,7 +78,7 @@ const PatientsPage = () => {
                     ))}
                   </ButtonGroup>
                 </div>
-                {searchResults && searchResults.map((patient) => <PatientCard key={patient.id} data={patient} />)}
+                {searchResults && searchResults.map((patient, index) => <PatientCard key={index} data={patient} />)}
               </Col>
             </Row>
           </Col>

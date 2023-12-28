@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import Sidebar from "../Sidebar";
-import { fetchUserPrescription } from "../../redux/actions/prescriptionsActions";
+import { fetchPendingPrescriotions, fetchUserPrescription } from "../../redux/actions/prescriptionsActions";
 import { fetchUserAppointments } from "../../redux/actions/appointmentActions";
 import { fetchPatientList } from "../../redux/actions/patientsDoctorActions";
 
@@ -22,11 +22,13 @@ const DoctorDashboard = () => {
       dispatch(fetchUserPrescription(token));
       dispatch(fetchPatientList(token));
       dispatch(fetchUserAppointments(token));
+      dispatch(fetchPendingPrescriotions(token));
     }
     const intervalId = setInterval(() => {
       dispatch(fetchUserPrescription(token));
       dispatch(fetchUserAppointments(token));
       dispatch(fetchPatientList(token));
+      dispatch(fetchPendingPrescriotions(token));
     }, 120000);
 
     return () => clearInterval(intervalId);

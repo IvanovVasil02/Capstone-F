@@ -2,9 +2,12 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import Sidebar from "../Sidebar";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import PrescriptionCard from "./PrescriptionCard";
 
 const PrescriptionPage = () => {
   const [search, setSearch] = useState();
+  const pendignPrescriptions = useSelector((state) => state.prescriptions.pendingPrescriptions.content);
   const handleSubmitSearch = (e) => {
     e.preventDefault();
   };
@@ -41,8 +44,12 @@ const PrescriptionPage = () => {
               </Col>
             </Row>
             <Row>
-              <Col sm={6}></Col>
-              <Col sm={6}></Col>
+              <Col sm={12}>
+                {pendignPrescriptions &&
+                  pendignPrescriptions.map((prescription, index) => (
+                    <PrescriptionCard data={prescription} key={index} />
+                  ))}
+              </Col>
             </Row>
           </Col>
         </Row>
