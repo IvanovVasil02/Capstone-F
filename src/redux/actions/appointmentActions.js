@@ -1,4 +1,5 @@
 export const GET_APPOINTMENTS_LIST = "GET_APPOINTMENTS_LIST";
+export const GET_PENDING_APPOINTMENTS_LIST = "GET_PENDING_APPOINTMENTS_LIST";
 import { jwtDecode } from "jwt-decode";
 
 // ---------------------------------APPOINTMENTS----------------------------------
@@ -40,6 +41,45 @@ export const fetchUserAppointments = (token) => {
   };
 };
 
+// ---------------------------------PENDING APPOINTMENTS----------------------------------
+
+export const fetchUserPendingAppointments = (token) => {
+  return async (dispatch) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      const role = decodedToken.role;
+
+      if (!decodedToken) {
+        throw new Error("Decodifica del token fallita");
+      }
+
+      if (role === "DOCTOR") {
+        const resp = await fetch("http://localhost:3001/doctors/pendingAppointments", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          dispatch({ type: GET_PENDING_APPOINTMENTS_LIST, payload: data });
+        }
+      } else if (role === "PATIENT") {
+        const resp = await fetch("http://localhost:3001/patients/pendingAppointments", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          dispatch({ type: GET_PENDING_APPOINTMENTS_LIST, payload: data });
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 // ---------------------------------ASK APPOINTMENT----------------------------------
 
 export const askAppointment = (token) => {
@@ -61,7 +101,8 @@ export const askAppointment = (token) => {
 export const fixApppointment = (token, id, date, time) => {
   return async () => {
     try {
-      const resp = await fetch("http://localhost:3001/patients/fixAppointment", {
+      const resp = await fetch("http://localhost:3001/doctors/fixAppointment", {
+        method: "PUT",
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",

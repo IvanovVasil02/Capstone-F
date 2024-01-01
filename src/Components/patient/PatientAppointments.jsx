@@ -2,13 +2,29 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import AppointmentCard from "./AppointmentCard";
 import Sidebar from "../Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { askAppointment } from "../../redux/actions/appointmentActions";
+import {
+  askAppointment,
+  fetchUserAppointments,
+  fetchUserPendingAppointments,
+} from "../../redux/actions/appointmentActions";
+import { useEffect } from "react";
 
 const PatientAppointments = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.savedToken);
-  const appointments = useSelector((state) => state.appointments.appointmentsList.page.content);
+  const appointments = useSelector((state) => state.appointments.appointmentsList.content);
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUserAppointments(token));
+      dispatch(fetchUserPendingAppointments(token));
+    }
+    const intervalId = setInterval(() => {
+      dispatch(fetchUserAppointments(token));
+      dispatch(fetchUserPendingAppointments(token));
+    }, 120000);
 
+    return () => clearInterval(intervalId);
+  }, [token, dispatch]);
   return (
     <>
       <Container fluid>

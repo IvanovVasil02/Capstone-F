@@ -2,7 +2,10 @@ import { Col, Container, Row } from "react-bootstrap";
 import Sidebar from "../Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchUserPrescription as fetchUserPrescriptions } from "../../redux/actions/prescriptionsActions";
+import {
+  fetchPendingPrescriotions,
+  fetchUserPrescription as fetchUserPrescriptions,
+} from "../../redux/actions/prescriptionsActions";
 import { fetchUserAppointments } from "../../redux/actions/appointmentActions";
 // import io from "socket.io-client";
 
@@ -12,14 +15,22 @@ const PatientDashboard = () => {
   const token = useSelector((state) => state.user.savedToken);
   const prescriptions = useSelector((state) => state.prescriptions.prescriptionList.page.totalElements);
   const pendingPrescriptions = useSelector((state) => state.prescriptions.prescriptionList.pending);
-  const appointments = useSelector((state) => state.appointments.appointmentsList.page.totalElements);
+  const appointments = useSelector((state) => state.appointments.appointmentsList.totalElements);
 
   useEffect(() => {
     if (token) {
       dispatch(fetchUserPrescriptions(token));
       dispatch(fetchUserAppointments(token));
+      dispatch(fetchPendingPrescriotions(token, "patients"));
     }
-  }, [currentUser, token, dispatch]);
+    const intervalId = setInterval(() => {
+      dispatch(fetchUserPrescriptions(token));
+      dispatch(fetchUserAppointments(token));
+      dispatch(fetchPendingPrescriotions(token, "patients"));
+    }, 120000);
+
+    return () => clearInterval(intervalId);
+  }, [token, dispatch]);
 
   return (
     currentUser !== null &&

@@ -46,7 +46,7 @@ const Topbar = () => {
           </Container>
         </Navbar>
       </div>
-      <LoginModal test='ciao' show={showModal} handleShow={handleShow} handleClose={handleClose} />
+      <LoginModal show={showModal} handleShow={handleShow} handleClose={handleClose} />
     </>
   );
 };

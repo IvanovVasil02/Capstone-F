@@ -1,22 +1,35 @@
 import {
   ADD_MEDICINE_TO_PRESCRIPTION,
+  FILL_CART_PRESCRIPTION,
   GET_PENDING_PRESCRIPTIONS,
   GET_PRESCRIPTIONS_LIST,
+  GET_SELECTED_ELEMENT,
   REMOVE_MEDICINE_FROM_PRESCRIPTION,
   RESET_CART_PRESCRIPTION,
 } from "../actions/prescriptionsActions";
 
 const prescriptionState = {
+  selectedElement: null,
   prescriptionList: [],
   pendingPrescriptions: [],
   cartPrescription: [],
 };
 const prescriptionReducer = (state = prescriptionState, action) => {
   switch (action.type) {
+    case GET_SELECTED_ELEMENT:
+      return {
+        ...state,
+        selectedElement: action.payload,
+      };
     case GET_PRESCRIPTIONS_LIST:
       return {
         ...state,
         prescriptionList: action.payload,
+      };
+    case FILL_CART_PRESCRIPTION:
+      return {
+        ...state,
+        cartPrescription: action.payload,
       };
     case RESET_CART_PRESCRIPTION:
       return {

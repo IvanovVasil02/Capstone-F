@@ -22,7 +22,7 @@ const AppointmentCard = ({ data }) => {
       const minutes = originalTime[1];
       setFormattedTime(`${hours}:${minutes}`);
     } else {
-      setFormattedDate("Orario non disponibile");
+      setFormattedTime("Orario non disponibile");
     }
   }, [data]);
 

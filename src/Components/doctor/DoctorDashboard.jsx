@@ -15,20 +15,20 @@ const DoctorDashboard = () => {
   const patients = useSelector((state) => state.doctor.patientList.totalElements);
   const prescriptions = useSelector((state) => state.prescriptions.prescriptionList.page.totalElements);
   const pendingPrescriptions = useSelector((state) => state.prescriptions.prescriptionList.pending);
-  const appointments = useSelector((state) => state.appointments.appointmentsList.page.totalElements);
+  const appointments = useSelector((state) => state.appointments.appointmentsList.totalElements);
 
   useEffect(() => {
     if (token) {
       dispatch(fetchUserPrescription(token));
       dispatch(fetchPatientList(token));
       dispatch(fetchUserAppointments(token));
-      dispatch(fetchPendingPrescriotions(token));
+      dispatch(fetchPendingPrescriotions(token, "doctors"));
     }
     const intervalId = setInterval(() => {
       dispatch(fetchUserPrescription(token));
       dispatch(fetchUserAppointments(token));
       dispatch(fetchPatientList(token));
-      dispatch(fetchPendingPrescriotions(token));
+      dispatch(fetchPendingPrescriotions(token, "doctors"));
     }, 120000);
 
     return () => clearInterval(intervalId);

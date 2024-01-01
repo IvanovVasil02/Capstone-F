@@ -1,4 +1,3 @@
-export const GET_SELECTED_ELEMENT = "GET_SELECTED_ELEMENT";
 export const GET_SEARCH_MEDICINE_RESULTS = "GET_SEARCH_RESULTS";
 
 // ---------------------------------SEARCH----------------------------------

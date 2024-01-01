@@ -44,9 +44,15 @@ const Sidebar = () => {
           </Nav.Item>
           <hr />{" "}
           <Nav.Item className='text-dark fw-medium'>
-            <Link to='/appointments' className='nav-link'>
-              <MdOutlineEditCalendar /> Appuntamenti
-            </Link>
+            {role === "DOCTOR" ? (
+              <Link to='/doc-appointments' className='nav-link'>
+                <MdOutlineEditCalendar /> Appuntamenti
+              </Link>
+            ) : (
+              <Link to='/appointments' className='nav-link'>
+                <MdOutlineEditCalendar /> Appuntamenti
+              </Link>
+            )}
           </Nav.Item>
           <hr />{" "}
           <Nav.Item className='text-dark fw-medium'>
@@ -71,7 +77,6 @@ const Sidebar = () => {
               </Link>
             </Nav.Item>
           )}
-          <hr />
         </div>
         <div>
           <hr />{" "}

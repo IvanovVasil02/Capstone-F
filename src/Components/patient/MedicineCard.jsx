@@ -38,6 +38,7 @@ const MedicineCard = ({ data }) => {
                 src='https://img.icons8.com/ios/50/72839c/plus-2-math.png'
                 alt='plus-2-math'
                 onClick={() => handleMedicine(data)}
+                className='pointer'
               />
               <span>€ {data.publicPrice}</span>
             </div>

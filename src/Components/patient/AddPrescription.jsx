@@ -1,11 +1,11 @@
 import { Button, ButtonGroup, Col, Container, Form, Row, ToggleButton } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import MedicineCard from "./MedicineCard";
-import CartPrescription from "./CartPrescription";
 import Sidebar from "../Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSearchMedicine } from "../../redux/actions/mainActions";
+import CartPrescription from "../CartPrescription";
 
 const AddPrescription = () => {
   const dispatch = useDispatch();
@@ -83,7 +83,7 @@ const AddPrescription = () => {
                 {searchResults && searchResults.map((medicine, index) => <MedicineCard data={medicine} key={index} />)}
               </Col>{" "}
               <Col md={5} className='p-0 '>
-                <CartPrescription />
+                <CartPrescription user='patient' show={true} />
               </Col>
             </Row>
           </Col>
