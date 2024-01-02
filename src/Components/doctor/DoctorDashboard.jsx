@@ -1,17 +1,26 @@
 import { Col, Container, Row } from "react-bootstrap";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Sidebar from "../Sidebar";
 import { fetchPendingPrescriotions, fetchUserPrescription } from "../../redux/actions/prescriptionsActions";
 import { fetchUserAppointments } from "../../redux/actions/appointmentActions";
 import { fetchPatientList } from "../../redux/actions/patientsDoctorActions";
+import Hero from "../Hero";
 
 const DoctorDashboard = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   const token = useSelector((state) => state.user.savedToken);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const closeSidebar = () => {
+    setShowSidebar(false);
+  };
+  const openSidebar = () => {
+    setShowSidebar(true);
+  };
   const patients = useSelector((state) => state.doctor.patientList.totalElements);
   const prescriptions = useSelector((state) => state.prescriptions.prescriptionList.page.totalElements);
   const pendingPrescriptions = useSelector((state) => state.prescriptions.prescriptionList.pending);
@@ -39,28 +48,21 @@ const DoctorDashboard = () => {
     currentUser !== undefined && (
       <>
         <Container fluid>
-          <Row>
-            <Sidebar />
-            <Col md={10} className='p-4'>
+          <Row className='flex-nowrap'>
+            <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
+            <Col className='p-md-5'>
               <Row>
-                <Col md={12} id='dashboard-header' className='p-0'>
-                  <div className='dashboard-img-container'></div>
-                  <div className='w-100 p-5'>
-                    <div className='d-flex flex-column align-items-center offset-2'>
-                      <h3 className='fw-light mb-4'>
-                        Benvenuta nella tua dashboard , {currentUser.name + " " + currentUser.surname}
-                      </h3>
-                      <h6 className='w-50 text-center'>
-                        Qui troverai tutte le informazioni relative alla tua salute e ai tuoi appuntamenti. Siamo qui
-                        per rendere il tuo percorso di cura più accessibile e informativo.
-                      </h6>
-                    </div>
-                  </div>
-                </Col>
+                <Hero
+                  currentUser={currentUser}
+                  title='Benvenuta nella tua dashboard ,'
+                  description='Qui troverai tutte le informazioni relative alla tua salute e ai tuoi appuntamenti. Siamo qui
+                        per rendere il tuo percorso di cura più accessibile e informativo.'
+                  openSidebar={openSidebar}
+                />
               </Row>
 
-              <Row className='column-gap-4 py-4'>
-                <Col className='p-0'>
+              <Row className='row-cols-2 row-cols-md-4 py-4'>
+                <Col className='p-3 ps-0 ps-md-3'>
                   <div className='statistics-box'>
                     <h5>Pazienti</h5>
                     <img
@@ -73,7 +75,7 @@ const DoctorDashboard = () => {
                   </div>
                 </Col>
 
-                <Col className='p-0'>
+                <Col className='p-3 pe-0 pe-md-3'>
                   <div className='statistics-box'>
                     <h5>Appuntamenti</h5>
                     <img
@@ -85,7 +87,7 @@ const DoctorDashboard = () => {
                     <h5 className='text-dark'>{appointments}</h5>
                   </div>
                 </Col>
-                <Col className='p-0'>
+                <Col className='p-3 ps-0 ps-md-3'>
                   <div className='statistics-box'>
                     <h5>Ricette</h5>
                     <img
@@ -97,7 +99,7 @@ const DoctorDashboard = () => {
                     <h5 className='text-dark'>{prescriptions}</h5>
                   </div>
                 </Col>
-                <Col className='p-0'>
+                <Col className='p-3 pe-0 pe-md-3'>
                   <div className='statistics-box'>
                     <h5>In Attesa</h5>
                     <img

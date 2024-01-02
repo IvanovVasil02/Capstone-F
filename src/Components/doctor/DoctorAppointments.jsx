@@ -5,10 +5,19 @@ import { fetchUserAppointments, fetchUserPendingAppointments } from "../../redux
 import AppointmentCard from "./AppointmentCard";
 import AppointmentModal from "./AppointmentModal";
 import { useEffect, useState } from "react";
+import Hero from "../Hero";
 
 const DoctorAppointments = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.savedToken);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const closeSidebar = () => {
+    setShowSidebar(false);
+  };
+  const openSidebar = () => {
+    setShowSidebar(true);
+  };
   const appointments = useSelector((state) => state.appointments.appointmentsList.content);
   const penddingAppointments = useSelector((state) => state.appointments.pendingAppointmentsList.content);
   const [currentTypeAppointments, setCurrentTypeAppointments] = useState("");
@@ -42,45 +51,37 @@ const DoctorAppointments = () => {
   return (
     <>
       <Container fluid>
-        <Row>
-          <Sidebar />
-          <Col md={10} className='p-4'>
-            <Row className='sticky-top'>
-              <Col md={12} id='dashboard-header' className='p-0'>
-                <div className='dashboard-img-container'></div>
-                <div className='w-100 p-4'>
-                  <div className='d-flex flex-column align-items-center offset-2'>
-                    <h3 className='fw-light mb-2'>Calendario e Prenotazioni</h3>
-                    <h6 className='w-75 text-center py-3'>
-                      Benvenuto nella nostra sezione dedicata alle prenotazioni! Qui puoi gestire i tuoi appuntamenti e
-                      richiedere nuove visite mediche in modo rapido e semplice.
-                    </h6>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-            <Row className='py-3'>
-              <Col md={12}>
-                <Row className='g-2'>
-                  <h4>I miei Appuntamenti</h4>
-                  <div className='py-2'>
-                    <ButtonGroup>
-                      {radios.map((radio, idx) => (
-                        <ToggleButton
-                          key={idx}
-                          id={`radio-${idx}`}
-                          type='radio'
-                          name='radio'
-                          variant='outline-secondary'
-                          value={radio.value}
-                          checked={radioValue === radio.value}
-                          onChange={(e) => setRadioValue(e.currentTarget.value)}
-                        >
-                          {radio.name}
-                        </ToggleButton>
-                      ))}
-                    </ButtonGroup>
-                  </div>
+        <Row className='flex-nowrap'>
+          <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
+
+          <Col>
+            <Row className='p-md-5'>
+              <Hero
+                title='Gestionale visite'
+                description=' Benvenuto nella nostra sezione dedicata alle prenotazioni! Qui puoi gestire i tuoi appuntamenti e
+                          richiedere nuove visite mediche in modo rapido e semplice.'
+                openSidebar={openSidebar}
+              />
+
+              <Col>
+                <h4 className='pt-3'>I miei Appuntamenti</h4>
+                <ButtonGroup className='py-2'>
+                  {radios.map((radio, idx) => (
+                    <ToggleButton
+                      key={idx}
+                      id={`radio-${idx}`}
+                      type='radio'
+                      name='radio'
+                      variant='outline-secondary'
+                      value={radio.value}
+                      checked={radioValue === radio.value}
+                      onChange={(e) => setRadioValue(e.currentTarget.value)}
+                    >
+                      {radio.name}
+                    </ToggleButton>
+                  ))}
+                </ButtonGroup>
+                <Row>
                   {currentTypeAppointments &&
                     currentTypeAppointments.map((appointment) => (
                       <AppointmentCard

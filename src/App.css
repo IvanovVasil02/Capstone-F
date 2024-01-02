@@ -134,9 +134,6 @@ form a:last-child {
   border-radius: 5px;
 }
 
-#sidebar {
-  height: 100vh !important;
-}
 
 #sidebar a {
   display: flex;

@@ -25,7 +25,7 @@ const PrescriptionCard = (props) => {
             <p>
               Cognome e nome: <span>{props.data.patient.surname + " " + props.data.patient.name}</span>
             </p>
-            <div className='d-flex justify-content-between gap-3'>
+            <div className='d-flex justify-content-between gap-3 flex-column flex-md-row'>
               <p>
                 props.Data: <span>{props.data.isssuingDate}</span>
               </p>

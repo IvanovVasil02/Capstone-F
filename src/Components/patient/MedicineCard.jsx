@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addMedicine } from "../../redux/actions/prescriptionsActions";
 
@@ -15,7 +15,7 @@ const MedicineCard = ({ data }) => {
   };
   return (
     <>
-      <div className='p-0 py-2'>
+      <Col md={12} className='p-0 py-2'>
         <Card className='p-3'>
           <Card.Body className='d-flex justify-content-between'>
             <div>
@@ -44,7 +44,7 @@ const MedicineCard = ({ data }) => {
             </div>
           </Card.Body>
         </Card>
-      </div>
+      </Col>
     </>
   );
 };

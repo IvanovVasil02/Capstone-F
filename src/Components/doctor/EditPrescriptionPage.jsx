@@ -9,10 +9,20 @@ import { fetchSearchMedicine } from "../../redux/actions/mainActions";
 import Prescription from "./Prescription";
 import { ApprovePrescription, fillCartPrescription } from "../../redux/actions/prescriptionsActions";
 import CartPrescription from "../CartPrescription";
+import TopTogglebar from "../TopTogglebar";
 
 const EditPrescriptionPage = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.savedToken);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const closeSidebar = () => {
+    setShowSidebar(false);
+  };
+  const openSidebar = () => {
+    setShowSidebar(true);
+  };
+
   const [search, setSearch] = useState();
   const searchResults = useSelector((state) => state.main.searchMedicineResults.content);
   const selectedPrescription = useSelector((state) => state.prescriptions.selectedElement);
@@ -65,16 +75,18 @@ const EditPrescriptionPage = () => {
   return (
     <>
       <Container fluid>
-        <Row>
-          <Sidebar />
-          <Col md={10}>
+        <Row className='flex-nowrap'>
+          <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
+          <Col className='p-md-5'>
             <Row>
-              <Col sm={8}>
+              <Col md={8}>
+                <TopTogglebar openSidebar={openSidebar} />
                 <h2>
                   Ricetta medica di{" "}
                   {selectedPrescription &&
                     selectedPrescription.patient.name + " " + selectedPrescription.patient.surname}
                 </h2>
+
                 <Prescription
                   data={selectedPrescription}
                   handleShow={handleShow}

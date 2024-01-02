@@ -32,7 +32,10 @@ const AppointmentCard = (props) => {
   };
 
   return (
-    <Col md={12} className='appointmet-card d-flex justify-content-between align-items-center px-3 py-3'>
+    <Col
+      md={12}
+      className='appointmet-card d-flex justify-content-between align-items-center p-3 my-2 flex-column flex-md-row'
+    >
       <p>Nome e cognome: {props.data.patient.name + " " + props.data.patient.surname}</p>
       <p>data: {formattedDate}</p>
       <p>Orario: {formattedTime}</p>

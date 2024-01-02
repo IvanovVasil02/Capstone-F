@@ -40,7 +40,7 @@ const Prescription = (props) => {
                 <Col md={6} className=''>
                   <Barcode value={props.data.patient.fiscalCode} height={25} width={1} fontSize={6} />
                 </Col>
-                <Col md={12} className='d-flex justify-content-between p-2'>
+                <Col md={12} className='d-flex justify-content-between p-2 flex-column flex-md-row'>
                   <p>INDIRIZZO: {props.data.patient.address.toUpperCase()}</p>
                   <p>CAP: {props.data.patient.municipality}</p>
                   <p>CITTA&apos;: {props.data.patient.municipalityDenomination.toUpperCase()}</p>
@@ -49,13 +49,13 @@ const Prescription = (props) => {
                 </Col>
               </Row>
               <Row>
-                <Col md={12} className='d-flex gap-5 py-2'>
+                <Col md={12} className='d-flex gap-md-5 py-2 flex-column flex-md-row'>
                   <p>ESENZIONE: NON ESSENTE</p>
                   <p>SIGLA PROVINCIA: {props.data.provinceAbbr}</p>
                   <p>CODICE ASL: {props.data.localHealthCode}</p>
                   <p>DISPOSIZIONI REGIONALI:</p>
                 </Col>
-                <Col md={12} className='d-flex gap-4'>
+                <Col md={12} className='d-flex gap-md-4'>
                   <p>TIPOLOGIA PRESCRIZIONE(S, H): {props.data.typeRecipe}</p>
                   <p>PRIORITA&apos; PRESCRIZIONE(U, B, D, P): {props.data.priorityPrescription}</p>
                 </Col>
@@ -93,12 +93,12 @@ const Prescription = (props) => {
                 <Col md={12}>
                   <p>QUESITO DIAGNOSTICO: {props.data.diagnosticQuestion}</p>
                 </Col>
-                <Col className='d-flex justify-content-between'>
+                <Col className='d-flex justify-content-between flex-column flex-md-row'>
                   <p>N.PRESTAZIONI/CONFEZIONI: {prescriptionLength}</p>
                   <p>TIPO DI RICETTA: Assist. SSN</p>
                   <p>DATA: {props.data.isssuingDate}</p>
                 </Col>
-                <Col md={12} className='d-flex justify-content-between'>
+                <Col md={12} className='d-flex justify-content-between flex-column flex-md-row'>
                   <p>CODICE FISCALE DEL MEDICO: {props.data.doctor.surname + " " + props.data.doctor.name}</p>
                   <p>COGNOME E NOME DEL MEDICO: {props.data.doctor.fiscalCode}</p>
                 </Col>

@@ -1,32 +1,34 @@
 import { Col, Container, Row } from "react-bootstrap";
 import Sidebar from "../Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import {
-  fetchPendingPrescriotions,
-  fetchUserPrescription as fetchUserPrescriptions,
-} from "../../redux/actions/prescriptionsActions";
+import { useEffect, useState } from "react";
+import { fetchUserPrescription as fetchUserPrescriptions } from "../../redux/actions/prescriptionsActions";
 import { fetchUserAppointments } from "../../redux/actions/appointmentActions";
-// import io from "socket.io-client";
+import Hero from "../Hero";
 
 const PatientDashboard = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   const token = useSelector((state) => state.user.savedToken);
   const prescriptions = useSelector((state) => state.prescriptions.prescriptionList.page.totalElements);
-  const pendingPrescriptions = useSelector((state) => state.prescriptions.prescriptionList.pending);
   const appointments = useSelector((state) => state.appointments.appointmentsList.totalElements);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const closeSidebar = () => {
+    setShowSidebar(false);
+  };
+  const openSidebar = () => {
+    setShowSidebar(true);
+  };
 
   useEffect(() => {
     if (token) {
       dispatch(fetchUserPrescriptions(token));
       dispatch(fetchUserAppointments(token));
-      dispatch(fetchPendingPrescriotions(token, "patients"));
     }
     const intervalId = setInterval(() => {
       dispatch(fetchUserPrescriptions(token));
       dispatch(fetchUserAppointments(token));
-      dispatch(fetchPendingPrescriotions(token, "patients"));
     }, 120000);
 
     return () => clearInterval(intervalId);
@@ -37,61 +39,38 @@ const PatientDashboard = () => {
     currentUser !== undefined && (
       <>
         <Container fluid>
-          <Row>
-            <Sidebar />
-            <Col md={10} className='p-4'>
+          <Row className='flex-nowrap'>
+            <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
+            <Col className='p-md-5'>
               <Row>
-                <Col md={12} id='dashboard-header' className='p-0'>
-                  <div className='dashboard-img-container'></div>
-                  <div className='w-100 p-5'>
-                    <div className='d-flex flex-column align-items-center offset-2'>
-                      <h3 className='fw-light mb-4'>
-                        Benvenuta nella tua dashboard , {currentUser.name + " " + currentUser.surname}
-                      </h3>
-                      <h6 className='w-50 text-center'>
-                        Qui troverai tutte le informazioni relative alla tua salute e ai tuoi appuntamenti. Siamo qui
-                        per rendere il tuo percorso di cura più accessibile e informativo.
-                      </h6>
-                    </div>
-                  </div>
-                </Col>
+                <Hero
+                  title='Benvenuta nella tua dashboard,'
+                  description=' Qui troverai tutte le informazioni relative alla tua salute e ai tuoi appuntamenti. Siamo qui
+                        per rendere il tuo percorso di cura più accessibile e informativo.'
+                  currentUser={currentUser}
+                  openSidebar={openSidebar}
+                />
               </Row>
               <Row className='column-gap-4 py-4'>
-                <Col className='p-0'>
-                  <div className='statistics-box'>
-                    <h5>Ricette</h5>
-                    <img
-                      width='50'
-                      height='50'
-                      src='https://img.icons8.com/ios/50/72839c/treatment-plan--v1.png'
-                      alt='treatment-plan--v1'
-                    />
-                    <h5 className='text-dark'>{prescriptions}</h5>
-                  </div>
+                <Col className='p-0 statistics-box'>
+                  <h5>Ricette</h5>
+                  <img
+                    width='50'
+                    height='50'
+                    src='https://img.icons8.com/ios/50/72839c/treatment-plan--v1.png'
+                    alt='treatment-plan--v1'
+                  />
+                  <h5 className='text-dark'>{prescriptions}</h5>
                 </Col>
-                <Col className='p-0'>
-                  <div className='statistics-box'>
-                    <h5>Appuntamenti</h5>
-                    <img
-                      width='50'
-                      height='50'
-                      src='https://img.icons8.com/ios/50/72839c/tear-off-calendar--v1.png'
-                      alt='tear-off-calendar--v1'
-                    />
-                    <h5 className='text-dark'>{appointments}</h5>
-                  </div>
-                </Col>
-                <Col className='p-0'>
-                  <div className='statistics-box'>
-                    <h5>In Attesa</h5>
-                    <img
-                      width='50'
-                      height='50'
-                      src='https://img.icons8.com/ios/50/72839c/treatment-list.png'
-                      alt='treatment-list'
-                    />
-                    <h5 className='text-dark'>{pendingPrescriptions}</h5>
-                  </div>
+                <Col className='p-0 statistics-box'>
+                  <h5>Appuntamenti</h5>
+                  <img
+                    width='50'
+                    height='50'
+                    src='https://img.icons8.com/ios/50/72839c/tear-off-calendar--v1.png'
+                    alt='tear-off-calendar--v1'
+                  />
+                  <h5 className='text-dark'>{appointments}</h5>
                 </Col>
               </Row>
               <Row className='data-container p-4 gap-5'>
