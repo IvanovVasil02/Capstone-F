@@ -173,6 +173,18 @@ form a:last-child {
   align-items: center;
   border-radius: 13px;
   box-shadow: 0px 2px 2px grey;
+  width: 50%;
+}
+
+.statistics-box-d {
+  background-color: #E5E5EF;
+  color: #72839C;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 13px;
+  box-shadow: 0px 2px 2px grey;
 }
 
 .data-container {
@@ -186,6 +198,7 @@ form a:last-child {
   border-radius: 10px;
   color: #F0F6FB;
   font-weight: lighter;
+  width: 50%;
 }
 
 .form-control:focus {

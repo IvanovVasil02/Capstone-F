@@ -39,20 +39,24 @@ const PatientAppointments = () => {
       <Container fluid>
         <Row className='flex-nowrap'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
-          <Col className='p-md-5'>
-            <Row className='sticky-top'>
+
+          <Col className='p-md-5 p-4'>
+            <Row>
               <Hero
                 description='Benvenuto nella nostra sezione dedicata alle prenotazioni! Qui puoi gestire i tuoi appuntamenti e
-                      richiedere nuove visite mediche in modo rapido e semplice.'
+                          richiedere nuove visite mediche in modo rapido e semplice.'
                 title='Calendario e Prenotazioni'
                 btnFunction={askAppointment(token)}
                 btnText='Richiedi orario'
                 openSidebar={openSidebar}
               />
-            </Row>
-            <Row className='py-3 gap-2'>
-              {appointments &&
-                appointments.map((appointment) => <AppointmentCard data={appointment} key={appointment.id} />)}
+
+              <Col md={12}>
+                <Row className='py-3 gap-2 justify-content-center'>
+                  {appointments &&
+                    appointments.map((appointment) => <AppointmentCard data={appointment} key={appointment.id} />)}
+                </Row>
+              </Col>
             </Row>
           </Col>
         </Row>
