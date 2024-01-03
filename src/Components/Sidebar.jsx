@@ -43,7 +43,7 @@ const Sidebar = (props) => {
     <>
       <div
         ref={divRef}
-        className={`shadow-sm d-flex flex-column col-auto  min-vh-100 ${!props.show && "d-none"} d-md-inline`}
+        className={`shadow-sm d-flex flex-column col-10 col-md-2  min-vh-100 ${!props.show && "d-none"} d-md-inline`}
         id='sidebar'
       >
         <div className='d-flex align-items-center'>

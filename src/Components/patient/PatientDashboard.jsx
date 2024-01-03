@@ -41,7 +41,7 @@ const PatientDashboard = () => {
         <Container fluid>
           <Row className='flex-nowrap'>
             <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
-            <Col className='p-md-5'>
+            <Col className='p-md-5 p-4'>
               <Row>
                 <Hero
                   title='Benvenuta nella tua dashboard,'

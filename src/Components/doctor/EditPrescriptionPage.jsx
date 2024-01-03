@@ -77,16 +77,17 @@ const EditPrescriptionPage = () => {
       <Container fluid>
         <Row className='flex-nowrap'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
-          <Col className='p-md-5'>
-            <Row>
-              <Col md={8}>
-                <TopTogglebar openSidebar={openSidebar} />
-                <h2>
-                  Ricetta medica di{" "}
-                  {selectedPrescription &&
-                    selectedPrescription.patient.name + " " + selectedPrescription.patient.surname}
-                </h2>
 
+          <Col className='p-md-5 p-4'>
+            <Row className='text-center'>
+              <TopTogglebar openSidebar={openSidebar} />
+              <h4>
+                Ricetta medica di{" "}
+                {selectedPrescription && selectedPrescription.patient.name + " " + selectedPrescription.patient.surname}
+              </h4>
+            </Row>
+            <Row className='flex-column-reverse flex-md-row'>
+              <Col md={8}>
                 <Prescription
                   data={selectedPrescription}
                   handleShow={handleShow}
@@ -107,7 +108,8 @@ const EditPrescriptionPage = () => {
                     <FaSearch />
                   </Button>
                 </Form>
-                <div>
+
+                <Row>
                   <ButtonGroup>
                     {radios.map((radio, idx) => (
                       <ToggleButton
@@ -124,14 +126,15 @@ const EditPrescriptionPage = () => {
                       </ToggleButton>
                     ))}
                   </ButtonGroup>
-                </div>
-                {searchResults && searchResults.map((medicine, index) => <MedicineCard data={medicine} key={index} />)}
-                <CartPrescription
-                  show={showCart}
-                  handleCloseCart={handleCloseCart}
-                  user='doctor'
-                  handleAprrovePrescription={handleAprrovePrescription}
-                />
+                  {searchResults &&
+                    searchResults.map((medicine, index) => <MedicineCard data={medicine} key={index} />)}
+                  <CartPrescription
+                    show={showCart}
+                    handleCloseCart={handleCloseCart}
+                    user='doctor'
+                    handleAprrovePrescription={handleAprrovePrescription}
+                  />
+                </Row>
               </Col>
             </Row>
           </Col>

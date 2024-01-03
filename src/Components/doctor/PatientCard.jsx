@@ -1,9 +1,9 @@
-import { Card } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
 
 const dataCard = ({ data }) => {
   return (
     <>
-      <div className='p-0 py-2'>
+      <Col className='p-0 py-2'>
         <Card className='p-3'>
           <Card.Body className='d-flex'>
             <div>
@@ -34,7 +34,7 @@ const dataCard = ({ data }) => {
             </div>
           </Card.Body>
         </Card>
-      </div>
+      </Col>
     </>
   );
 };

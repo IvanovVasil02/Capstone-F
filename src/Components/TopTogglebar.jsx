@@ -4,7 +4,7 @@ import { FaBars } from "react-icons/fa";
 
 const TopTogglebar = (props) => {
   return (
-    <Col className='d-flex justify-content-between align-items-center py-2 d-md-none'>
+    <Col className='d-flex justify-content-between align-items-center py-2 d-md-none px-0'>
       <Navbar.Brand className='logo-container '>
         <span>Auto</span>
         <span>Ricetta</span>

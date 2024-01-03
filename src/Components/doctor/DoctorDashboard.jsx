@@ -50,7 +50,7 @@ const DoctorDashboard = () => {
         <Container fluid>
           <Row className='flex-nowrap'>
             <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
-            <Col className='p-md-5'>
+            <Col className='p-md-5 p-4'>
               <Row>
                 <Hero
                   currentUser={currentUser}
@@ -61,9 +61,9 @@ const DoctorDashboard = () => {
                 />
               </Row>
 
-              <Row className='row-cols-2 row-cols-md-4 py-4'>
+              <Row className='row-cols-2 row-cols-md-4 py-3'>
                 <Col className='p-3 ps-0 ps-md-3'>
-                  <div className='statistics-box'>
+                  <div className='statistics-box-d'>
                     <h5>Pazienti</h5>
                     <img
                       width='50'
@@ -76,7 +76,7 @@ const DoctorDashboard = () => {
                 </Col>
 
                 <Col className='p-3 pe-0 pe-md-3'>
-                  <div className='statistics-box'>
+                  <div className='statistics-box-d'>
                     <h5>Appuntamenti</h5>
                     <img
                       width='50'
@@ -88,7 +88,7 @@ const DoctorDashboard = () => {
                   </div>
                 </Col>
                 <Col className='p-3 ps-0 ps-md-3'>
-                  <div className='statistics-box'>
+                  <div className='statistics-box-d'>
                     <h5>Ricette</h5>
                     <img
                       width='50'
@@ -100,7 +100,7 @@ const DoctorDashboard = () => {
                   </div>
                 </Col>
                 <Col className='p-3 pe-0 pe-md-3'>
-                  <div className='statistics-box'>
+                  <div className='statistics-box-d'>
                     <h5>In Attesa</h5>
                     <img
                       width='50'

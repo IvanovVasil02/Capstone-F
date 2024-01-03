@@ -46,40 +46,44 @@ const PrescriptionPage = () => {
   return (
     <>
       <Container fluid>
-        <Row className='flex-nowrap'>
+        <Row className='flex-nowrap p-2'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
-          <Col className='p-md-5'>
-            <Hero
-              title='Gestionale ricette'
-              description='Esplora la tua salute con comodità: controlla le tue ricette mediche in attesa e approvate in un unico luogo. '
-              openSidebar={openSidebar}
-            />
-            <ButtonGroup className='py-2'>
-              {radios.map((radio, idx) => (
-                <ToggleButton
-                  key={idx}
-                  id={`radio-${idx}`}
-                  type='radio'
-                  name='radio'
-                  variant='outline-secondary'
-                  value={radio.value}
-                  checked={radioValue === radio.value}
-                  onChange={(e) => setRadioValue(e.currentTarget.value)}
-                >
-                  {radio.name}
-                </ToggleButton>
-              ))}
-            </ButtonGroup>
-            {currentTypePrescriptions &&
-              currentTypePrescriptions.map((prescription, index) => (
-                <PrescriptionCard
-                  data={prescription}
-                  key={index}
-                  handleShowPrescriptionModal={handleShowPrescriptionModal}
-                  setSelectedPrescription={setSelectedPrescription}
-                  userRole={userRole}
-                />
-              ))}
+          <Col className='p-md-5 p-4'>
+            <Row>
+              <Hero
+                title='Gestionale ricette'
+                description='Esplora la tua salute con comodità: controlla le tue ricette mediche in attesa e approvate in un unico luogo. '
+                openSidebar={openSidebar}
+              />
+            </Row>
+            <Row>
+              <ButtonGroup className='py-3 px-0'>
+                {radios.map((radio, idx) => (
+                  <ToggleButton
+                    key={idx}
+                    id={`radio-${idx}`}
+                    type='radio'
+                    name='radio'
+                    variant='outline-secondary'
+                    value={radio.value}
+                    checked={radioValue === radio.value}
+                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                  >
+                    {radio.name}
+                  </ToggleButton>
+                ))}
+              </ButtonGroup>
+              {currentTypePrescriptions &&
+                currentTypePrescriptions.map((prescription, index) => (
+                  <PrescriptionCard
+                    data={prescription}
+                    key={index}
+                    handleShowPrescriptionModal={handleShowPrescriptionModal}
+                    setSelectedPrescription={setSelectedPrescription}
+                    userRole={userRole}
+                  />
+                ))}
+            </Row>
           </Col>
         </Row>
       </Container>

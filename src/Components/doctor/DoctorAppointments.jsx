@@ -54,45 +54,44 @@ const DoctorAppointments = () => {
         <Row className='flex-nowrap'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
 
-          <Col>
-            <Row className='p-md-5'>
+          <Col className='p-md-5 p-4'>
+            <Row>
               <Hero
                 title='Gestionale visite'
                 description=' Benvenuto nella nostra sezione dedicata alle prenotazioni! Qui puoi gestire i tuoi appuntamenti e
                           richiedere nuove visite mediche in modo rapido e semplice.'
                 openSidebar={openSidebar}
               />
+            </Row>
 
-              <Col>
-                <h4 className='pt-3'>I miei Appuntamenti</h4>
-                <ButtonGroup className='py-2'>
-                  {radios.map((radio, idx) => (
-                    <ToggleButton
-                      key={idx}
-                      id={`radio-${idx}`}
-                      type='radio'
-                      name='radio'
-                      variant='outline-secondary'
-                      value={radio.value}
-                      checked={radioValue === radio.value}
-                      onChange={(e) => setRadioValue(e.currentTarget.value)}
-                    >
-                      {radio.name}
-                    </ToggleButton>
-                  ))}
-                </ButtonGroup>
-                <Row>
-                  {currentTypeAppointments &&
-                    currentTypeAppointments.map((appointment) => (
-                      <AppointmentCard
-                        data={appointment}
-                        handleShow={handleShow}
-                        key={appointment.id}
-                        setSelectedAppointment={setSelectedAppointment}
-                      />
-                    ))}
-                </Row>
-              </Col>
+            <Row>
+              <h4 className='pt-3'>I miei appuntamenti</h4>
+              <ButtonGroup className='py-3 px-0'>
+                {radios.map((radio, idx) => (
+                  <ToggleButton
+                    key={idx}
+                    id={`radio-${idx}`}
+                    type='radio'
+                    name='radio'
+                    variant='outline-secondary'
+                    value={radio.value}
+                    checked={radioValue === radio.value}
+                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                  >
+                    {radio.name}
+                  </ToggleButton>
+                ))}
+              </ButtonGroup>
+
+              {currentTypeAppointments &&
+                currentTypeAppointments.map((appointment) => (
+                  <AppointmentCard
+                    data={appointment}
+                    handleShow={handleShow}
+                    key={appointment.id}
+                    setSelectedAppointment={setSelectedAppointment}
+                  />
+                ))}
             </Row>
           </Col>
         </Row>

@@ -38,7 +38,7 @@ const PatientsPage = () => {
 
   const getForm = () => {
     return (
-      <Form onSubmit={handleSubmitSearch} className='d-flex p-3' id='search-form'>
+      <Form onSubmit={handleSubmitSearch} className='d-flex p-3 z-3' id='search-form'>
         <Form.Control
           type='input'
           placeholder='Cerca paziente'
@@ -57,33 +57,38 @@ const PatientsPage = () => {
       <Container fluid>
         <Row className='flex-nowrap'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
-          <Col className='p-md-5'>
-            <Hero
-              title='Gestionale pazienti'
-              description='Benvenuto nella sezione di ricerca pazienti. Utilizza la barra di ricerca qui sotto per trovare
-                      rapidamente le informazioni sui pazienti.'
-              form={getForm()}
-              openSidebar={openSidebar}
-            />
+          <Col className='p-md-5 p-4'>
+            <Row>
+              <Hero
+                title='Gestionale pazienti'
+                description='Benvenuto nella sezione di ricerca pazienti. Utilizza la barra di ricerca qui sotto per trovare
+                        rapidamente le informazioni sui pazienti.'
+                form={getForm()}
+                openSidebar={openSidebar}
+              />
+            </Row>
 
-            <ButtonGroup className='py-2'>
-              {radios.map((radio) => (
-                <ToggleButton
-                  key={radio.value}
-                  id={`radio-${radio.value}`}
-                  type='radio'
-                  name='radio'
-                  variant='outline-secondary'
-                  value={radio.value}
-                  checked={radioValue === radio.value}
-                  onChange={(e) => setRadioValue(e.currentTarget.value)}
-                >
-                  {radio.name}
-                </ToggleButton>
-              ))}
-            </ButtonGroup>
+            <Row>
+              <h4 className='pt-3'>I miei pazienti</h4>
+              <ButtonGroup className='py-2 py-3 px-0'>
+                {radios.map((radio) => (
+                  <ToggleButton
+                    key={radio.value}
+                    id={`radio-${radio.value}`}
+                    type='radio'
+                    name='radio'
+                    variant='outline-secondary'
+                    value={radio.value}
+                    checked={radioValue === radio.value}
+                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                  >
+                    {radio.name}
+                  </ToggleButton>
+                ))}
+              </ButtonGroup>
 
-            {searchResults && searchResults.map((patient, index) => <PatientCard key={index} data={patient} />)}
+              {searchResults && searchResults.map((patient, index) => <PatientCard key={index} data={patient} />)}
+            </Row>
           </Col>
         </Row>
       </Container>

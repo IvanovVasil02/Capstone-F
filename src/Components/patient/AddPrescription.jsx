@@ -40,7 +40,7 @@ const AddPrescription = () => {
 
   const getForm = () => {
     return (
-      <Form onSubmit={handleSubmitSearch} className='d-flex p-3' id='search-form'>
+      <Form onSubmit={handleSubmitSearch} className='d-flex p-3 z-3' id='search-form'>
         <Form.Control
           type='input'
           placeholder='Cerca medicina'
@@ -60,38 +60,41 @@ const AddPrescription = () => {
       <Container fluid>
         <Row className='flex-nowrap'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
-          <Col className='p-md-5'>
-            <Hero
-              title='Crea la tua ricetta'
-              currentUser={currentUser}
-              description='Personalizza la tua cura: esplora e seleziona con facilità le medicine desiderate per la tua ricetta. '
-              form={getForm()}
-              openSidebar={openSidebar}
-            />
-            <Row className='py-2'>
+          <Col className='p-md-5 p-4'>
+            <Row>
+              <Hero
+                title='Crea la tua ricetta'
+                currentUser={currentUser}
+                description='Personalizza la tua cura: esplora e seleziona con facilità le medicine desiderate per la tua ricetta. '
+                form={getForm()}
+                openSidebar={openSidebar}
+              />
+            </Row>
+            <Row className='py-3 px-0 flex-column-reverse flex-md-row'>
               <Col md={7}>
-                <ButtonGroup className='py-2'>
-                  {radios.map((radio, idx) => (
-                    <ToggleButton
-                      key={idx}
-                      id={`radio-${idx}`}
-                      type='radio'
-                      name='radio'
-                      variant='outline-secondary'
-                      value={radio.value}
-                      checked={radioValue === radio.value}
-                      onChange={(e) => setRadioValue(e.currentTarget.value)}
-                    >
-                      {radio.name}
-                    </ToggleButton>
-                  ))}
-                </ButtonGroup>
-                <Row className='m-0'>
+                <Row>
+                  <ButtonGroup className='py-2 px-0'>
+                    {radios.map((radio, idx) => (
+                      <ToggleButton
+                        key={idx}
+                        id={`radio-${idx}`}
+                        type='radio'
+                        name='radio'
+                        variant='outline-secondary'
+                        value={radio.value}
+                        checked={radioValue === radio.value}
+                        onChange={(e) => setRadioValue(e.currentTarget.value)}
+                      >
+                        {radio.name}
+                      </ToggleButton>
+                    ))}
+                  </ButtonGroup>
+
                   {searchResults &&
                     searchResults.map((medicine, index) => <MedicineCard data={medicine} key={index} />)}
                 </Row>
               </Col>
-              <Col>
+              <Col className='px-0 ps-md-3'>
                 <CartPrescription user='patient' show={true} />
               </Col>
             </Row>
