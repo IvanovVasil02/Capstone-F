@@ -8,11 +8,11 @@ const Header = () => {
   const handleShow = () => setShow(true);
   return (
     <>
-      <Container fluid>
+      <Container fluid className='mt-5'>
         <Row>
           <Col md={12} className='p-0'>
-            <div className='header'>
-              <div className=' d-flex  flex-column align-items-start justify-content-center'>
+            <div className='header p-4'>
+              <div className=' d-flex flex-column align-items-start justify-content-center min-vh-100'>
                 <div>
                   <h1>Servire la tua esigienza</h1>
                   <h1>di salute è la nostra</h1>
