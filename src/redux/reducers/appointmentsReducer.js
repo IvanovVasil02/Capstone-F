@@ -1,4 +1,5 @@
 import { GET_APPOINTMENTS_LIST, GET_PENDING_APPOINTMENTS_LIST } from "../actions/appointmentActions";
+import { LOGOUT } from "../actions/authenticationActions";
 
 const appointmentsState = {
   appointmentsList: [],
@@ -16,6 +17,9 @@ const appointmentsReducer = (state = appointmentsState, action) => {
         ...state,
         pendingAppointmentsList: action.payload,
       };
+    case LOGOUT:
+      return appointmentsState;
+
     default:
       return state;
   }

@@ -1,3 +1,4 @@
+import { LOGOUT } from "../actions/authenticationActions";
 import { GET_PATIENT_LIST, GET_SEARCH_PATIENT_RESULTS } from "../actions/patientsDoctorActions";
 
 const doctorState = {
@@ -17,6 +18,9 @@ const doctorReducer = (state = doctorState, action) => {
         ...state,
         searchPatientResults: action.payload,
       };
+
+    case LOGOUT:
+      return doctorState;
 
     default:
       return state;
