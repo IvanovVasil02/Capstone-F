@@ -13,27 +13,15 @@ export const fetchUserAppointments = (token) => {
       if (!decodedToken) {
         throw new Error("Decodifica del token fallita");
       }
-
-      if (role === "DOCTOR") {
-        const resp = await fetch("http://localhost:3001/doctors/appointments", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        if (resp.ok) {
-          const data = await resp.json();
-          dispatch({ type: GET_APPOINTMENTS_LIST, payload: data });
-        }
-      } else if (role === "PATIENT") {
-        const resp = await fetch("http://localhost:3001/patients/appointments", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        if (resp.ok) {
-          const data = await resp.json();
-          dispatch({ type: GET_APPOINTMENTS_LIST, payload: data });
-        }
+      // const resp = await fetch("http://localhost:3001/doctors/appointments", {
+      const resp = await fetch(`http://localhost:3001/${role === "DOCTOR" ? "doctors" : "patients"}/appointments`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        dispatch({ type: GET_APPOINTMENTS_LIST, payload: data });
       }
     } catch (err) {
       console.log(err);
@@ -53,26 +41,18 @@ export const fetchUserPendingAppointments = (token) => {
         throw new Error("Decodifica del token fallita");
       }
 
-      if (role === "DOCTOR") {
-        const resp = await fetch("http://localhost:3001/doctors/pendingAppointments", {
+      // const resp = await fetch("http://localhost:3001/doctors/pendingAppointments", {
+      const resp = await fetch(
+        `http://localhost:3001/${role === "DOCTOR" ? "doctors" : "patients"}/pendingAppointments`,
+        {
           headers: {
             Authorization: "Bearer " + token,
           },
-        });
-        if (resp.ok) {
-          const data = await resp.json();
-          dispatch({ type: GET_PENDING_APPOINTMENTS_LIST, payload: data });
         }
-      } else if (role === "PATIENT") {
-        const resp = await fetch("http://localhost:3001/patients/pendingAppointments", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        if (resp.ok) {
-          const data = await resp.json();
-          dispatch({ type: GET_PENDING_APPOINTMENTS_LIST, payload: data });
-        }
+      );
+      if (resp.ok) {
+        const data = await resp.json();
+        dispatch({ type: GET_PENDING_APPOINTMENTS_LIST, payload: data });
       }
     } catch (err) {
       console.log(err);
@@ -85,6 +65,7 @@ export const fetchUserPendingAppointments = (token) => {
 export const askAppointment = (token) => {
   return async () => {
     try {
+      // eslint-disable-next-line no-unused-vars
       const resp = await fetch("http://localhost:3001/patients/askAppointment", {
         method: "POST",
         headers: {
@@ -101,6 +82,8 @@ export const askAppointment = (token) => {
 export const fixApppointment = (token, id, date, time) => {
   return async () => {
     try {
+      // const resp = await fetch("http://localhost:3001/doctors/fixAppointment", {
+      // eslint-disable-next-line no-unused-vars
       const resp = await fetch("http://localhost:3001/doctors/fixAppointment", {
         method: "PUT",
         headers: {

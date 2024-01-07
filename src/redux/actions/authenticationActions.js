@@ -2,15 +2,17 @@ import { jwtDecode } from "jwt-decode";
 import { fetchUserPrescription } from "./prescriptionsActions";
 import { fetchPatientList } from "./patientsDoctorActions";
 import { fetchUserAppointments } from "./appointmentActions";
+import { clearError, setError } from "./errorActions";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
 export const SAVED_TOKEN = "SAVED_TOKEN";
+export const LOGOUT = "LOGOUT";
 
 // ---------------------------------LOGIN USER----------------------------------
 
 export const fetchLogin = (email, password) => {
   return async (dispatch) => {
     try {
-      const response = await fetch("http://localhost:3001/authentication/login", {
+      const response = await fetch("http:///localhost:3001/authentication/login", {
         method: "POST",
         body: JSON.stringify({
           email,
@@ -28,9 +30,21 @@ export const fetchLogin = (email, password) => {
         dispatch(fetchUserPrescription(resp.token));
         dispatch(fetchPatientList(resp.token));
         dispatch(fetchUserAppointments(resp.token));
+        const decodedToken = jwtDecode(resp.token);
+        const role = decodedToken.role;
+
+        if (!decodedToken) {
+          throw new Error("Decodifica del token fallita");
+        }
+
+        return role === "DOCTOR" ? "/doc-dashboard" : "/dashboard";
+      } else if (!response.ok) {
+        const resp = await response.json();
+        dispatch(setError(resp.message));
+        setTimeout(() => dispatch(clearError()), 3000);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 };
@@ -74,6 +88,10 @@ export const registerUser = (
         const resp = await response.json();
         await dispatch({ type: SAVED_TOKEN, payload: resp.token });
         dispatch(getUserProfile(resp.token));
+      } else if (!response.ok) {
+        const resp = await response.json();
+        dispatch(setError(resp.errorsList));
+        setTimeout(() => dispatch(clearError()), 3000);
       }
     } catch (error) {
       console.log(error);
@@ -93,29 +111,25 @@ export const getUserProfile = (token) => {
         throw new Error("Decodifica del token fallita");
       }
 
-      if (role === "DOCTOR") {
-        const resp = await fetch("http://localhost:3001/doctors/me", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        if (resp.ok) {
-          const data = await resp.json();
-          dispatch({ type: GET_CURRENT_USER, payload: data });
-        }
-      } else if (role === "PATIENT") {
-        const resp = await fetch("http://localhost:3001/patients/me", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        if (resp.ok) {
-          const data = await resp.json();
-          dispatch({ type: GET_CURRENT_USER, payload: data });
-        }
+      const resp = await fetch(`http://localhost:3001/${role === "DOCTOR" ? "doctors" : "patients"}/me`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        dispatch({ type: GET_CURRENT_USER, payload: data });
       }
     } catch (err) {
       console.log(err);
     }
+  };
+};
+
+// --------------------------------------LOGOUT----------------------------------------
+export const logout = () => {
+  return (dispatch) => {
+    localStorage.clear();
+    dispatch({ type: LOGOUT });
   };
 };
