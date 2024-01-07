@@ -9,12 +9,28 @@ import {
 } from "../../redux/actions/appointmentActions";
 import { useEffect, useState } from "react";
 import Hero from "../Hero";
+import { useNavigate } from "react-router-dom";
+import TopTogglebar from "../TopTogglebar";
 
 const PatientAppointments = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.user.savedToken);
+  const role = useSelector((state) => state.user.currentUser.role);
   const appointments = useSelector((state) => state.appointments.appointmentsList.content);
   const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    if (showSidebar) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showSidebar]);
 
   const closeSidebar = () => {
     setShowSidebar(false);
@@ -22,10 +38,14 @@ const PatientAppointments = () => {
   const openSidebar = () => {
     setShowSidebar(true);
   };
+  useEffect(() => {}, [token, navigate]);
+
   useEffect(() => {
-    if (token) {
+    if (token && role !== "DOCTOR") {
       dispatch(fetchUserAppointments(token));
       dispatch(fetchUserPendingAppointments(token));
+    } else if (token === null || role === "DOCTOR") {
+      navigate("/");
     }
     const intervalId = setInterval(() => {
       dispatch(fetchUserAppointments(token));
@@ -33,13 +53,14 @@ const PatientAppointments = () => {
     }, 120000);
 
     return () => clearInterval(intervalId);
-  }, [token, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
   return (
     <>
       <Container fluid>
-        <Row className='flex-nowrap'>
+        <Row className='flex-nowrap flex-column flex-md-row'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
-
+          <TopTogglebar openSidebar={openSidebar} />
           <Col className='p-md-5 p-4'>
             <Row>
               <Hero
@@ -48,7 +69,6 @@ const PatientAppointments = () => {
                 title='Calendario e Prenotazioni'
                 btnFunction={askAppointment(token)}
                 btnText='Richiedi orario'
-                openSidebar={openSidebar}
               />
 
               <Col md={12}>
