@@ -1,18 +1,32 @@
 import { useState } from "react";
 import { Button, Col, Form, Modal, Nav, Navbar, Row } from "react-bootstrap";
 import { BsClipboardHeart, BsX } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchLogin } from "../redux/actions/authenticationActions";
+import { useNavigate } from "react-router-dom";
 const LoginModal = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLogged, setIsLogged] = useState(false);
+  const error = useSelector((state) => state.error.messageError);
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-    dispatch(fetchLogin(email, password));
+    try {
+      const destination = await dispatch(fetchLogin(email, password));
+      if (destination) {
+        setIsLogged(true);
+        setTimeout(() => navigate(destination), 2000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-
+  const handleRegister = () => {
+    props.handleClose();
+  };
   return (
     <>
       <Modal size='md' show={props.show} aria-labelledby='example-modal-sizes-title-sm'>
@@ -41,6 +55,7 @@ const LoginModal = (props) => {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
+                  autoComplete='username'
                 />
               </Form.Group>
               <Form.Group as={Col} md='10' className='text-center'>
@@ -52,6 +67,7 @@ const LoginModal = (props) => {
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
+                  autoComplete='current-password'
                 />
               </Form.Group>
 
@@ -71,13 +87,15 @@ const LoginModal = (props) => {
               <Button type='submit' className='btn-login w-50'>
                 Invio
               </Button>
+              {isLogged && <span className='text-success'>Login effettuato con successo!</span>}
+              {error && error}
 
-              <span className='d-flex'>
+              <p>
                 Non hai un account?{" "}
-                <Nav.Link href='#home' className='text-primary'>
-                  <small>Registrati</small>
-                </Nav.Link>
-              </span>
+                <span className='text-primary pointer' onClick={handleRegister}>
+                  Registrati
+                </span>
+              </p>
             </div>
           </Form>
         </Modal.Body>

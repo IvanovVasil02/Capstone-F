@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Nav, Navbar, Row } from "react-bootstrap";
 import { BsClipboardHeart, BsX } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/actions/authenticationActions";
 
 const RegisterModal = (props) => {
@@ -16,8 +16,9 @@ const RegisterModal = (props) => {
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [doctor, setDoctor] = useState("");
-  const [doctors, setDoctors] = useState();
+  const [doctors, setDoctors] = useState("");
   const [showSecondModal, setShowSecondModal] = useState(false);
+  const errors = useSelector((state) => state.error.messageError);
 
   const hadnleCloseSecondModal = () => setShowSecondModal(false);
   const hadnleShowSecondModal = () => {
@@ -61,7 +62,7 @@ const RegisterModal = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            <div className={showSecondModal && "d-none"}>
+            <div className={showSecondModal ? "d-none" : ""}>
               <Row id='login-form' className='mb-3 justify-content-center g-4'>
                 <Form.Group as={Col} md='10' className='text-center border-1'>
                   <Form.Control
@@ -182,6 +183,7 @@ const RegisterModal = (props) => {
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
+                    autoComplete='username'
                   />
                 </Form.Group>{" "}
                 <Form.Group as={Col} md='10' className='text-center border-1'>
@@ -193,6 +195,7 @@ const RegisterModal = (props) => {
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
+                    autoComplete='new-password'
                   />
                 </Form.Group>
                 <Form.Group as={Col} md='10' className='text-center border-1'>
@@ -219,12 +222,20 @@ const RegisterModal = (props) => {
                   Invio
                 </Button>
 
-                <span className='d-flex'>
-                  Sei già registrato?{" "}
-                  <Nav.Link href='#home' className='text-primary'>
-                    <small>Login</small>
-                  </Nav.Link>
-                </span>
+                {errors &&
+                  Array.isArray(errors) &&
+                  errors.map((item, index) => (
+                    <p className='text-danger' key={index}>
+                      {item}
+                    </p>
+                  ))}
+
+                <p>
+                  Sei già registrato?
+                  <span className='text-primary pointer' onClick={props.handleClose}>
+                    Login
+                  </span>
+                </p>
               </div>
             </div>
           </Form>
