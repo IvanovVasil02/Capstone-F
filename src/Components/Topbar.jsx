@@ -8,44 +8,43 @@ const Topbar = () => {
   const handleShow = () => setShowModal(true);
   return (
     <>
-      <div>
-        <Navbar expand='lg' className='bg-transparent shadow-sm' id='topbar'>
-          <Container>
-            <Navbar.Brand href='#home' className='logo-container'>
-              <span>Auto</span>
-              <span>Ricetta</span>
-              <BsClipboardHeart />
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls='basic-navbar-nav' />
-            <Navbar.Collapse id='basic-navbar-nav'>
-              <Nav className='ms-auto text-center d-flex justify-content-center align-items-center'>
-                <Nav.Link href='#home' className='text-dark '>
-                  Home
-                </Nav.Link>
-                <Nav.Link href='#link' className='text-dark '>
-                  Medicine
-                </Nav.Link>
-                <Nav.Link href='#link' className='text-dark '>
-                  Ricette
-                </Nav.Link>
-                <Nav.Link href='#home' className='text-dark '>
-                  Nuova ricetta
-                </Nav.Link>
-                <Nav.Link href='#home' className='text-white text-decoration-none'>
-                  <Button
-                    className='btn-login border-0'
-                    onClick={() => {
-                      handleShow();
-                    }}
-                  >
-                    Login
-                  </Button>
-                </Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </div>
+      <Navbar expand='md' className='bg-white shadow-sm fixed-top ' id='topbar'>
+        <Container fluid className='px-0 px-md-3'>
+          <Navbar.Brand href='#home' className='logo-container px-2'>
+            <span>Auto</span>
+            <span>Ricetta</span>
+            <BsClipboardHeart />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls='basic-navbar-nav' className='me-2' />
+          <Navbar.Collapse id='basic-navbar-nav' className='bg-white '>
+            <Nav className='ms-auto text-center d-flex justify-content-center align-items-center'>
+              <Nav.Link href='#home' className='text-dark '>
+                Home
+              </Nav.Link>
+              <Nav.Link href='#link' className='text-dark '>
+                Medicine
+              </Nav.Link>
+              <Nav.Link href='#link' className='text-dark '>
+                Ricette
+              </Nav.Link>
+              <Nav.Link href='#home' className='text-dark '>
+                Nuova ricetta
+              </Nav.Link>
+              <Nav.Link href='#home' className='text-white text-decoration-none'>
+                <Button
+                  className='btn-login border-0'
+                  onClick={() => {
+                    handleShow();
+                  }}
+                >
+                  Login
+                </Button>
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
       <LoginModal show={showModal} handleShow={handleShow} handleClose={handleClose} />
     </>
   );
