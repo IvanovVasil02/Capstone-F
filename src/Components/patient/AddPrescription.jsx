@@ -70,7 +70,7 @@ const AddPrescription = () => {
                 openSidebar={openSidebar}
               />
             </Row>
-            <Row className='py-3 px-0'>
+            <Row className='py-3 px-0 flex-column-reverse flex-md-row'>
               <Col md={7}>
                 <Row>
                   <ButtonGroup className='py-2 px-0'>
@@ -94,7 +94,7 @@ const AddPrescription = () => {
                     searchResults.map((medicine, index) => <MedicineCard data={medicine} key={index} />)}
                 </Row>
               </Col>
-              <Col>
+              <Col className='px-0 ps-md-3'>
                 <CartPrescription user='patient' show={true} />
               </Col>
             </Row>
