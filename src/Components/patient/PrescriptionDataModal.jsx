@@ -1,8 +1,10 @@
 import { Modal, Navbar } from "react-bootstrap";
 import { BsClipboardHeart, BsX } from "react-icons/bs";
 import Prescription from "../doctor/Prescription";
+import { useSelector } from "react-redux";
 
 const PrescriptionDataModal = (props) => {
+  const selectedPrescription = useSelector((state) => state.prescriptions.selectedElement);
   return (
     <>
       <Modal size='lg' show={props.showPrescriptionModal} aria-labelledby='example-modal-sizes-title-sm'>
@@ -19,7 +21,7 @@ const PrescriptionDataModal = (props) => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <Prescription data={props.selectedPrescription} userRole={props.userRole} />
+          <Prescription data={selectedPrescription} userRole={props.userRole} />
         </Modal.Body>
       </Modal>
     </>

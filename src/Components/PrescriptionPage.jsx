@@ -6,11 +6,36 @@ import PrescriptionDataModal from "./patient/PrescriptionDataModal";
 import { useEffect, useState } from "react";
 import { fetchPendingPrescriotions, fetchUserPrescription } from "../redux/actions/prescriptionsActions";
 import Hero from "./Hero";
+import TopTogglebar from "./TopTogglebar";
+import { useNavigate } from "react-router-dom";
 
-const PrescriptionPage = () => {
+const PrescriptionPage = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.user.savedToken);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
+  const userRole = useSelector((state) => state.user.currentUser?.role || 0);
+  const [radioValue, setRadioValue] = useState("approved");
+  const radios = [
+    { name: "In attesa", value: "pending" },
+    { name: "Approvate", value: "approved" },
+  ];
+
+  const handleClosePrescriptionModal = () => setShowPrescriptionModal(false);
+  const handleShowPrescriptionModal = () => setShowPrescriptionModal(true);
+
+  useEffect(() => {
+    if (showSidebar) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showSidebar]);
 
   const closeSidebar = () => {
     setShowSidebar(false);
@@ -18,42 +43,47 @@ const PrescriptionPage = () => {
   const openSidebar = () => {
     setShowSidebar(true);
   };
-  const pendignPrescriptions = useSelector((state) => state.prescriptions.pendingPrescriptions.content);
-  const prescriptions = useSelector((state) => state.prescriptions.prescriptionList.page.content);
-  const [currentTypePrescriptions, setCurrentTypePrescriptions] = useState("");
-  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
-  const handleClosePrescriptionModal = () => setShowPrescriptionModal(false);
-  const handleShowPrescriptionModal = () => setShowPrescriptionModal(true);
-  const [selectedPrescription, setSelectedPrescription] = useState("");
-  const userRole = useSelector((state) => state.user.currentUser.role);
-  const [radioValue, setRadioValue] = useState("pending");
-  const radios = [
-    { name: "In attesa", value: "pending" },
-    { name: "Approvate", value: "approved" },
-  ];
 
   useEffect(() => {
-    if (radioValue === "pending") {
-      dispatch(fetchPendingPrescriotions(token, "patients"));
-      setCurrentTypePrescriptions(pendignPrescriptions);
-    } else if (radioValue === "approved") {
-      dispatch(fetchUserPrescription(token));
-      setCurrentTypePrescriptions(prescriptions);
-    }
+    const fetchPrescriptions = async () => {
+      try {
+        if (token) {
+          if (radioValue === "pending") {
+            await dispatch(fetchPendingPrescriotions(token));
+          } else if (radioValue === "approved") {
+            await dispatch(fetchUserPrescription(token));
+          }
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchPrescriptions();
+
+    const intervalId = setInterval(fetchPrescriptions, 120000);
+
+    return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [radioValue, token]);
+
+  useEffect(() => {
+    props.type && setRadioValue("pending");
+  }, [props.type]);
 
   return (
     <>
       <Container fluid>
-        <Row className='flex-nowrap p-2'>
+        <Row className='flex-nowrap flex-column flex-md-row'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
+          <TopTogglebar openSidebar={openSidebar} />
           <Col className='p-md-5 p-4'>
             <Row>
               <Hero
                 title='Gestionale ricette'
                 description='Esplora la tua salute con comodità: controlla le tue ricette mediche in attesa e approvate in un unico luogo. '
-                openSidebar={openSidebar}
               />
             </Row>
             <Row>
@@ -73,22 +103,28 @@ const PrescriptionPage = () => {
                   </ToggleButton>
                 ))}
               </ButtonGroup>
-              {currentTypePrescriptions &&
-                currentTypePrescriptions.map((prescription, index) => (
-                  <PrescriptionCard
-                    data={prescription}
-                    key={index}
-                    handleShowPrescriptionModal={handleShowPrescriptionModal}
-                    setSelectedPrescription={setSelectedPrescription}
-                    userRole={userRole}
-                  />
-                ))}
+            </Row>
+            <Row>
+              {useSelector((state) => {
+                if (radioValue === "pending") {
+                  return state.prescriptions.pendingPrescriptions?.content || [];
+                } else if (radioValue === "approved") {
+                  return state.prescriptions.prescriptionList.page?.content || [];
+                }
+                return [];
+              }).map((prescription, index) => (
+                <PrescriptionCard
+                  data={prescription}
+                  key={index}
+                  handleShowPrescriptionModal={handleShowPrescriptionModal}
+                  userRole={userRole}
+                />
+              ))}
             </Row>
           </Col>
         </Row>
       </Container>
       <PrescriptionDataModal
-        selectedPrescription={selectedPrescription}
         handleClosePrescriptionModal={handleClosePrescriptionModal}
         showPrescriptionModal={showPrescriptionModal}
         userRole={userRole}
