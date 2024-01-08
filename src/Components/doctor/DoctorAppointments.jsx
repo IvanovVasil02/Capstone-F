@@ -6,11 +6,28 @@ import AppointmentCard from "./AppointmentCard";
 import AppointmentModal from "./AppointmentModal";
 import { useEffect, useState } from "react";
 import Hero from "../Hero";
+import { useNavigate } from "react-router-dom";
+import TopTogglebar from "../TopTogglebar";
 
 const DoctorAppointments = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.user.savedToken);
+  const role = useSelector((state) => state.user.currentUser.role);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [appointmentsChanged, setAppointmentsChanged] = useState(false);
+
+  useEffect(() => {
+    if (showSidebar) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showSidebar]);
 
   const closeSidebar = () => {
     setShowSidebar(false);
@@ -18,12 +35,15 @@ const DoctorAppointments = () => {
   const openSidebar = () => {
     setShowSidebar(true);
   };
-  const appointments = useSelector((state) => state.appointments.appointmentsList.content);
-  const penddingAppointments = useSelector((state) => state.appointments.pendingAppointmentsList.content);
-  const [currentTypeAppointments, setCurrentTypeAppointments] = useState("");
+
   const [selectedAppointment, setSelectedAppointment] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const handleClose = () => setShowModal(false);
+
+  const handleClose = () => {
+    setShowModal(false);
+    setAppointmentsChanged(false);
+  };
+
   const handleShow = () => setShowModal(true);
 
   const [radioValue, setRadioValue] = useState("pending");
@@ -33,34 +53,41 @@ const DoctorAppointments = () => {
   ];
 
   useEffect(() => {
-    if (radioValue === "pending") {
-      dispatch(fetchUserPendingAppointments(token));
-      setCurrentTypeAppointments(penddingAppointments);
-    } else if (radioValue === "approved") {
-      dispatch(fetchUserAppointments(token));
-      setCurrentTypeAppointments(appointments);
-    }
+    const fetchAppointments = async () => {
+      try {
+        if (token && role === "DOCTOR") {
+          if (radioValue === "pending") {
+            await dispatch(fetchUserPendingAppointments(token));
+          } else if (radioValue === "approved") {
+            await dispatch(fetchUserAppointments(token));
+          }
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    const intervalId = setInterval(() => {
-      dispatch(fetchUserAppointments(token));
-      dispatch(fetchUserPendingAppointments(token));
-    }, 120000);
+    fetchAppointments();
+    const intervalId = setInterval(fetchAppointments, 120000);
 
     return () => clearInterval(intervalId);
-  }, [token, dispatch, radioValue, penddingAppointments, appointments]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, radioValue, appointmentsChanged]);
   return (
     <>
       <Container fluid>
-        <Row className='flex-nowrap'>
+        <Row className='flex-nowrap flex-column flex-md-row'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
-
+          <TopTogglebar openSidebar={openSidebar} />
           <Col className='p-md-5 p-4'>
             <Row>
               <Hero
                 title='Gestionale visite'
                 description=' Benvenuto nella nostra sezione dedicata alle prenotazioni! Qui puoi gestire i tuoi appuntamenti e
                           richiedere nuove visite mediche in modo rapido e semplice.'
-                openSidebar={openSidebar}
               />
             </Row>
 
@@ -82,16 +109,21 @@ const DoctorAppointments = () => {
                   </ToggleButton>
                 ))}
               </ButtonGroup>
-
-              {currentTypeAppointments &&
-                currentTypeAppointments.map((appointment) => (
-                  <AppointmentCard
-                    data={appointment}
-                    handleShow={handleShow}
-                    key={appointment.id}
-                    setSelectedAppointment={setSelectedAppointment}
-                  />
-                ))}
+              {useSelector((state) => {
+                if (radioValue === "pending") {
+                  return state.appointments.pendingAppointmentsList?.content || [];
+                } else if (radioValue === "approved") {
+                  return state.appointments.appointmentsList?.content || [];
+                }
+                return [];
+              }).map((appointment) => (
+                <AppointmentCard
+                  data={appointment}
+                  handleShow={handleShow}
+                  key={appointment.id}
+                  setSelectedAppointment={setSelectedAppointment}
+                />
+              ))}
             </Row>
           </Col>
         </Row>
@@ -103,6 +135,8 @@ const DoctorAppointments = () => {
           handleShow={handleShow}
           appointment={selectedAppointment}
           token={token}
+          setAppointmentsChanged={setAppointmentsChanged}
+          appointmentsChanged={appointmentsChanged}
         />
       )}
     </>
