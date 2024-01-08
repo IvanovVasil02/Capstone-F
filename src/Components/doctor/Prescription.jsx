@@ -3,11 +3,10 @@ import Barcode from "react-barcode";
 import { Card, Col, Row, Table } from "react-bootstrap";
 import { LuPen } from "react-icons/lu";
 import { useSelector } from "react-redux";
-// import { useSelector } from "react-redux";
 const Prescription = (props) => {
   const prescription = useSelector((state) => state.prescriptions.cartPrescription);
   const [prescriptionLength, setPrescriptionLength] = useState(0);
-
+  const patientData = props.data?.patient ?? props.data;
   useEffect(() => {
     let prescriptionLength = 0;
     for (let i = 0; i < prescription.length; i++) {
@@ -30,20 +29,22 @@ const Prescription = (props) => {
                 </Col>
                 <Col md={6} className='px-3'>
                   {" "}
-                  <Barcode value={props.data.prescriptionID} />
+                  {props.data.prescriptionID && <Barcode value={props.data.prescriptionID} />}
                 </Col>
               </Row>
               <Row className='border-1 border-bottom border-black mb-2'>
                 <Col md={6}>
-                  <p>COGNOME E NOME: {props.data.patient.surname + " " + props.data.patient.name}</p>
+                  <p>COGNOME E NOME: {patientData.surname + " " + patientData.name}</p>
                 </Col>
                 <Col md={6} className=''>
-                  <Barcode value={props.data.patient.fiscalCode} height={25} width={1} fontSize={6} />
+                  <Barcode value={patientData.fiscalCode} height={25} width={1} fontSize={6} />
                 </Col>
+
                 <Col md={12} className='d-flex justify-content-between p-2 flex-column flex-md-row'>
-                  <p>INDIRIZZO: {props.data.patient.address.toUpperCase()}</p>
-                  <p>CAP: {props.data.patient.municipality}</p>
-                  <p>CITTA&apos;: {props.data.patient.municipalityDenomination.toUpperCase()}</p>
+                  <p>INDIRIZZO: {patientData.address.toUpperCase()}</p>
+                  <p>CAP: {patientData.municipality}</p>
+                  <p>CITTA&apos;: {patientData.municipalityDenomination.toUpperCase()}</p>
+
                   <p>CODICE ASL: {props.data.localHealthCode}</p>
                   <p>PROVINCIA: {props.data.provinceAbbr}</p>
                 </Col>
@@ -85,6 +86,19 @@ const Prescription = (props) => {
                             </tr>
                           );
                         })}
+                      {props.data &&
+                        props.userRole === "PATIENT" &&
+                        props.data.prescription.map((item, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className='col-10 text-start'>
+                                {item.medicine.activeIngredient + " " + item.medicine.nameAndPackaging}
+                              </td>
+                              <td className='col-1'>{item.quantity}</td>
+                              <td className='col-1'>{item.note}</td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </Table>
                 </Col>
@@ -103,7 +117,7 @@ const Prescription = (props) => {
                   <p>COGNOME E NOME DEL MEDICO: {props.data.doctor.fiscalCode}</p>
                 </Col>
               </Row>
-              {props.userRole !== "PATIENT" && (
+              {props.data.status !== "APPROVED" && props.userRole !== "PATIENT" && (
                 <div
                   className='position-absolute z-1 bg-body-secondary p-1 rounded-2 top-0 end-0 pencil'
                   onClick={props.handleShow}

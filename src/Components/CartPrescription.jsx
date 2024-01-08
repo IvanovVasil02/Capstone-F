@@ -12,7 +12,7 @@ const CartPrescription = (props) => {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (divRef.current && !divRef.current.contains(event.target)) {
+      if (divRef.current && !divRef.current.contains(event.target) && props.handleCloseCart) {
         props.handleCloseCart();
       }
     };
@@ -27,7 +27,7 @@ const CartPrescription = (props) => {
 
   return (
     <>
-      <div ref={divRef} className={`p-0 py-2 sticky-bottom ${!props.show && "d-none"}`}>
+      <div ref={divRef} className={`p-0 py-2 z-2 sticky-bottom ${!props.show && "d-none"}`}>
         <Card className='p-2' id='cart-prescriptions'>
           <Card.Body>
             <Card.Title className='d-flex justify-content-center py-2'>Ricetta</Card.Title>
