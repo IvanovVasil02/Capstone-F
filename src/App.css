@@ -8,6 +8,10 @@ body {
   margin: 0;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 ::before,
 *::after {
   box-sizing: border-box;
@@ -29,6 +33,8 @@ body {
   background-color: #F0F6FB(8, 184, 8, 0.523) !important;
   color: #FFF;
   height: 70px;
+  flex-direction: column;
+  align-items: center;
 }
 
 a {
@@ -69,6 +75,7 @@ a {
   padding: 120px;
   /* Aggiungi padding a tuo piacimento */
 }
+
 
 .header h1 {
   color: #F0F6FB;
@@ -133,6 +140,7 @@ form a:last-child {
   font-weight: bold;
   border-radius: 5px;
 }
+
 
 
 #sidebar a {
