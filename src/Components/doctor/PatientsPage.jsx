@@ -5,12 +5,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import PatientCard from "./PatientCard";
 import { fetchSearchPatient } from "../../redux/actions/patientsDoctorActions";
+
 import Hero from "../Hero";
+import { useNavigate } from "react-router-dom";
+import TopTogglebar from "../TopTogglebar";
 
 const PatientsPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.user.savedToken);
+  const role = useSelector((state) => state.user.currentUser.role);
   const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    if (showSidebar) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showSidebar]);
 
   const closeSidebar = () => {
     setShowSidebar(false);
@@ -18,6 +35,7 @@ const PatientsPage = () => {
   const openSidebar = () => {
     setShowSidebar(true);
   };
+
   const [search, setSearch] = useState("");
   const [radioValue, setRadioValue] = useState("name");
   const radios = [
@@ -32,13 +50,17 @@ const PatientsPage = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchSearchPatient(token, search, radioValue));
+    if (token && role === "DOCTOR") {
+      dispatch(fetchSearchPatient(token, search, radioValue));
+    } else {
+      navigate("/");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [radioValue]);
+  }, [radioValue, navigate]);
 
   const getForm = () => {
     return (
-      <Form onSubmit={handleSubmitSearch} className='d-flex p-3 z-3' id='search-form'>
+      <Form onSubmit={handleSubmitSearch} className='d-flex p-3 z-2' id='search-form'>
         <Form.Control
           type='input'
           placeholder='Cerca paziente'
@@ -55,8 +77,9 @@ const PatientsPage = () => {
   return (
     <>
       <Container fluid>
-        <Row className='flex-nowrap'>
+        <Row className='flex-nowrap flex-column flex-md-row'>
           <Sidebar show={showSidebar} closeSidebar={closeSidebar} />
+          <TopTogglebar openSidebar={openSidebar} />
           <Col className='p-md-5 p-4'>
             <Row>
               <Hero
@@ -64,11 +87,10 @@ const PatientsPage = () => {
                 description='Benvenuto nella sezione di ricerca pazienti. Utilizza la barra di ricerca qui sotto per trovare
                         rapidamente le informazioni sui pazienti.'
                 form={getForm()}
-                openSidebar={openSidebar}
               />
             </Row>
 
-            <Row>
+            <Row className='flex-column'>
               <h4 className='pt-3'>I miei pazienti</h4>
               <ButtonGroup className='py-2 py-3 px-0'>
                 {radios.map((radio) => (

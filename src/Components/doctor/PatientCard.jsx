@@ -1,6 +1,19 @@
 import { Card, Col } from "react-bootstrap";
+import { deselectElement, selectPatient } from "../../redux/actions/prescriptionsActions";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { CiSquarePlus } from "react-icons/ci";
+import { PiFolderSimplePlusLight } from "react-icons/pi";
 
-const dataCard = ({ data }) => {
+const PatientCard = ({ data }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    dispatch(selectPatient(data));
+    dispatch(deselectElement());
+    navigate("/editPrescription");
+  };
   return (
     <>
       <Col className='p-0 py-2'>
@@ -9,28 +22,32 @@ const dataCard = ({ data }) => {
             <div>
               <div className='d-flex'>
                 <p className='pe-2'>Nome e cognome:</p>
-                <p>{data.name + " " + data.surname}</p>
+                <span>{data.name + " " + data.surname}</span>
               </div>{" "}
               <div className='d-flex'>
                 <p className='pe-2'>data di nascita:</p>
-                <p>{data.birthDate}</p>
+                <span>{data.birthDate}</span>
               </div>
               <div className='d-flex'>
                 <p className='pe-2'>Codice fiscale:</p>
-                <p>{data.fiscalCode}</p>
+                <span>{data.fiscalCode}</span>
               </div>{" "}
               <div className='d-flex'>
                 <p className='pe-2'>Indirizzo:</p>
-                <p>{data.address}</p>
+                <span>{data.address}</span>
               </div>
               <div className='d-flex'>
                 <p className='pe-2'>Recapito telefonico:</p>
-                <p>{data.phoneNumber}</p>
+                <span>{data.phoneNumber}</span>
               </div>
               <div className='d-flex'>
                 <p className='pe-2'>Email:</p>
-                <p>{data.email}</p>
+                <span>{data.email}</span>
               </div>
+            </div>
+            <div className='ms-auto'>
+              <CiSquarePlus className='fs-2 pointer d-block' onClick={handleClick} />
+              <PiFolderSimplePlusLight className='fs-2 pointer' />
             </div>
           </Card.Body>
         </Card>
@@ -38,4 +55,4 @@ const dataCard = ({ data }) => {
     </>
   );
 };
-export default dataCard;
+export default PatientCard;
