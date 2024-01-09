@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "./Components/HomePage";
+import HomePage from "./Components/homePage/HomePage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PatientDashboard from "./Components/patient/PatientDashboard";
 import PatientAppointments from "./Components/patient/PatientAppointments";

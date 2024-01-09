@@ -5,7 +5,7 @@ const Hero = (props) => {
   const dispatch = useDispatch();
   return (
     <>
-      <Col md={12} id='dashboard-header'>
+      <Col md={12} id='dashboard-hero'>
         <div className='dashboard-img-container'></div>
         <div className='w-100 p-4 p-md-5'>
           <div className='d-flex flex-column align-items-center offset-md-2'>
