@@ -14,7 +14,7 @@ import {
 } from "../../redux/actions/prescriptionsActions";
 import CartPrescription from "../CartPrescription";
 import TopTogglebar from "../TopTogglebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BsArrowLeftCircle } from "react-icons/bs";
 
 const EditPrescriptionPage = () => {
@@ -23,6 +23,7 @@ const EditPrescriptionPage = () => {
   const token = useSelector((state) => state.user.savedToken);
   const role = useSelector((state) => state.user.currentUser.role);
   const [showSidebar, setShowSidebar] = useState(false);
+  const { actionType } = useParams();
 
   useEffect(() => {
     if (showSidebar) {
@@ -89,8 +90,8 @@ const EditPrescriptionPage = () => {
   const [prescriptionTypology, setPrescriptionTypology] = useState("");
   const cartPrescription = useSelector((state) => state.prescriptions.cartPrescription);
 
-  const handleAprrovePrescription = () => {
-    if (selectedPatient) {
+  const handleApprovePrescription = () => {
+    if (selectedPatient && actionType === "create") {
       dispatch(
         createPrescription(
           token,
@@ -101,7 +102,7 @@ const EditPrescriptionPage = () => {
           cartPrescription
         )
       );
-    } else if (selectedPrescription) {
+    } else if (selectedPrescription && actionType === "approve") {
       dispatch(
         ApprovePrescription(
           token,
@@ -190,7 +191,7 @@ const EditPrescriptionPage = () => {
                     show={showCart}
                     handleCloseCart={handleCloseCart}
                     user='doctor'
-                    handleAprrovePrescription={handleAprrovePrescription}
+                    handleApprovePrescription={handleApprovePrescription}
                   />
                 </Row>
               </Col>

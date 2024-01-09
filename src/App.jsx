@@ -25,7 +25,7 @@ function App() {
           <Route path='/patients' element={<PatientsPage />} />
           <Route path='/prescriptions' element={<PrescriptionPage />} />{" "}
           <Route path='/pendingPrescriptions' element={<PrescriptionPage type='pending' />} />
-          <Route path='/editPrescription' element={<EditPrescriptionPage />} />
+          <Route path='/editPrescription/:actionType' element={<EditPrescriptionPage />} />
         </Routes>
       </BrowserRouter>
     </>

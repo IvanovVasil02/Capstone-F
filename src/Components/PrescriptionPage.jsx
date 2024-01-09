@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { fetchPendingPrescriotions, fetchUserPrescription } from "../redux/actions/prescriptionsActions";
 import Hero from "./Hero";
 import TopTogglebar from "./TopTogglebar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PrescriptionPage = (props) => {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const PrescriptionPage = (props) => {
     { name: "In attesa", value: "pending" },
     { name: "Approvate", value: "approved" },
   ];
+  const location = useLocation();
 
   const handleClosePrescriptionModal = () => setShowPrescriptionModal(false);
   const handleShowPrescriptionModal = () => setShowPrescriptionModal(true);
@@ -118,6 +119,7 @@ const PrescriptionPage = (props) => {
                   key={index}
                   handleShowPrescriptionModal={handleShowPrescriptionModal}
                   userRole={userRole}
+                  location={location.pathname}
                 />
               ))}
             </Row>

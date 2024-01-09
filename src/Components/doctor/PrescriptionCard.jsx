@@ -12,11 +12,15 @@ const PrescriptionCard = (props) => {
     if (props.data.status === "APPROVED" || props.userRole === "PATIENT") {
       dispatch(selectElement(props.data));
       props.handleShowPrescriptionModal();
-    } else {
+    } else if (props.location === "/prescriptions") {
       dispatch(selectElement(props.data));
-      navigate("/editPrescription");
+      navigate("/editPrescription/approve");
+    } else if (props.location === "/patients") {
+      dispatch(selectElement(props.data));
+      navigate("/editPrescription/create");
     }
   };
+
   return (
     <>
       <Card className='p-0 mb-3'>

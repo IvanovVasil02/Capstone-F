@@ -1,8 +1,9 @@
 export const GET_APPOINTMENTS_LIST = "GET_APPOINTMENTS_LIST";
 export const GET_PENDING_APPOINTMENTS_LIST = "GET_PENDING_APPOINTMENTS_LIST";
 import { jwtDecode } from "jwt-decode";
+import { setError } from "./errorActions";
 
-// ---------------------------------APPOINTMENTS----------------------------------
+// ---------------------------------GET APPOINTMENTS----------------------------------
 
 export const fetchUserAppointments = (token) => {
   return async (dispatch) => {
@@ -80,9 +81,16 @@ export const askAppointment = (token) => {
 
 // ---------------------------------FIX APPOINTMENT----------------------------------
 export const fixApppointment = (token, id, date, time) => {
-  return async () => {
+  return async (dispatch) => {
     try {
-      // const resp = await fetch("http://localhost:3001/doctors/fixAppointment", {
+      const [year, month, day] = date.split("-").map(Number);
+      const [hours, minutes] = time.split(":").map(Number);
+      const dateTime = new Date(year, month - 1, day, hours, minutes);
+      const currentDate = new Date();
+
+      if (dateTime < currentDate.getTime()) {
+        throw new Error("Incorrectly date");
+      }
       // eslint-disable-next-line no-unused-vars
       const resp = await fetch("http://localhost:3001/doctors/fixAppointment", {
         method: "PUT",
@@ -96,8 +104,14 @@ export const fixApppointment = (token, id, date, time) => {
           time,
         }),
       });
-    } catch (err) {
-      console.log(err);
+
+      if (resp.ok) {
+        console.log("date", date);
+        console.log("time", time);
+      }
+    } catch (error) {
+      console.log(error.message);
+      dispatch(setError(error.message));
     }
   };
 };

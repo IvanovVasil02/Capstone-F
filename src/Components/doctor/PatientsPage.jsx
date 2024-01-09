@@ -7,7 +7,7 @@ import PatientCard from "./PatientCard";
 import { fetchSearchPatient } from "../../redux/actions/patientsDoctorActions";
 
 import Hero from "../Hero";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TopTogglebar from "../TopTogglebar";
 
 const PatientsPage = () => {
@@ -16,6 +16,7 @@ const PatientsPage = () => {
   const token = useSelector((state) => state.user.savedToken);
   const role = useSelector((state) => state.user.currentUser.role);
   const [showSidebar, setShowSidebar] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (showSidebar) {
@@ -109,7 +110,10 @@ const PatientsPage = () => {
                 ))}
               </ButtonGroup>
 
-              {searchResults && searchResults.map((patient, index) => <PatientCard key={index} data={patient} />)}
+              {searchResults &&
+                searchResults.map((patient, index) => (
+                  <PatientCard key={index} data={patient} location={location.pathname} />
+                ))}
             </Row>
           </Col>
         </Row>

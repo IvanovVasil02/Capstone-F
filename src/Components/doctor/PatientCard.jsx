@@ -12,7 +12,7 @@ const PatientCard = ({ data }) => {
   const handleClick = () => {
     dispatch(selectPatient(data));
     dispatch(deselectElement());
-    navigate("/editPrescription");
+    navigate("/editPrescription/create");
   };
   return (
     <>

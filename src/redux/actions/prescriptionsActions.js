@@ -1,4 +1,5 @@
 import { jwtDecode } from "jwt-decode";
+import { setError } from "./errorActions";
 export const GET_SELECTED_ELEMENT = "GET_SELECTED_ELEMENT";
 export const GET_SELECTED_PATIENT = "GET_SELECTED_PATIENT";
 export const GET_PRESCRIPTIONS_LIST = "GET_PRESCRIPTIONS_LIST";
@@ -100,14 +101,17 @@ export const createPrescription = (
   cartPrescription
 ) => {
   return async (dispatch) => {
-    console.log("ciao");
     try {
+      if (cartPrescription.length <= 0) {
+        throw new Error("Empty cart");
+      }
       const prescription = cartPrescription.map((item) => ({
         medicine: { id: item.medicine.medicineId },
         quantity: item.quantity,
         note: "",
       }));
 
+      // eslint-disable-next-line no-unused-vars
       const resp = await fetch("http://localhost:3001/doctors/createPrescription/" + patientId, {
         method: "POST",
         headers: {
@@ -121,14 +125,9 @@ export const createPrescription = (
           typeRecipe: prescriptionTypology,
         }),
       });
-
-      if (resp.ok) {
-        dispatch({ type: RESET_CART_PRESCRIPTION, payload: [] });
-      } else if (!resp.ok) {
-        console.log(resp.json());
-      }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(setError(error.message));
+      console.log(error.message);
     }
   };
 };
@@ -136,13 +135,16 @@ export const createPrescription = (
 // ---------------------------------SEND PRESCRIPTION REQUEST----------------------------------
 export const sendPrescriptionRequest = (token, cartPrescription) => {
   return async (dispatch) => {
-    console.log("ciao");
     try {
+      if (cartPrescription.length <= 0) {
+        throw new Error("Empty cart");
+      }
       const prescription = cartPrescription.map((item) => ({
         medicine: { id: item.medicine.medicineId },
         quantity: item.quantity,
       }));
 
+      // eslint-disable-next-line no-unused-vars
       const resp = await fetch("http://localhost:3001/patients/takePrescription", {
         method: "POST",
         headers: {
@@ -153,12 +155,9 @@ export const sendPrescriptionRequest = (token, cartPrescription) => {
           prescription: prescription,
         }),
       });
-
-      if (resp.ok) {
-        dispatch({ type: RESET_CART_PRESCRIPTION, payload: [] });
-      }
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(setError(error.message));
+      console.log(error.message);
     }
   };
 };
@@ -172,10 +171,12 @@ export const ApprovePrescription = (
   prescriptionTypology,
   cartPrescription
 ) => {
-  return async () => {
+  return async (dispatch) => {
     try {
+      if (cartPrescription.length <= 0) {
+        throw new Error("Empty cart");
+      }
       const prescription = cartPrescription.map((item) => {
-        console.log("Prescription item:", item);
         return {
           medicine: { id: item.medicine.medicineId },
           quantity: item.quantity,
@@ -197,8 +198,9 @@ export const ApprovePrescription = (
           typeRecipe: prescriptionTypology,
         }),
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      dispatch(setError(error.message));
+      console.log(error.message);
     }
   };
 };

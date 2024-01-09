@@ -96,11 +96,15 @@ const Sidebar = (props) => {
             <hr />
           </li>
           <li className='nav-item fw-medium'>
-            <Link to='/addPrescription' className='nav-link text-black'>
-              <MdOutlineMedicalServices />
-              <span> Nova ricetta</span>
-            </Link>
-            <hr />
+            {role === "PATIENT" && (
+              <>
+                <Link to='/addPrescription' className='nav-link text-black'>
+                  <MdOutlineMedicalServices />
+                  <span> Nova ricetta</span>
+                </Link>
+                <hr />
+              </>
+            )}
           </li>
           <li className='nav-item fw-medium'>
             {role === "DOCTOR" && (
