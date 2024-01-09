@@ -1,6 +1,6 @@
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { BsClipboardHeart } from "react-icons/bs";
-import LoginModal from "./LoginModal";
+import LoginModal from "../LoginModal";
 import { useState } from "react";
 const Topbar = () => {
   const [showModal, setShowModal] = useState(false);
@@ -8,7 +8,7 @@ const Topbar = () => {
   const handleShow = () => setShowModal(true);
   return (
     <>
-      <Navbar expand='md' className='bg-white shadow-sm fixed-top ' id='topbar'>
+      <Navbar expand='md' className='bg-white shadow-sm fixed-top' id='topbar'>
         <Container fluid className='px-0 px-md-3'>
           <Navbar.Brand href='#home' className='logo-container px-2'>
             <span>Auto</span>
@@ -22,13 +22,13 @@ const Topbar = () => {
                 Home
               </Nav.Link>
               <Nav.Link href='#link' className='text-dark '>
-                Medicine
-              </Nav.Link>
-              <Nav.Link href='#link' className='text-dark '>
-                Ricette
+                Chi siamo
               </Nav.Link>
               <Nav.Link href='#home' className='text-dark '>
-                Nuova ricetta
+                Servizi
+              </Nav.Link>
+              <Nav.Link href='#link' className='text-dark '>
+                Contatti
               </Nav.Link>
               <Nav.Link href='#home' className='text-white text-decoration-none'>
                 <Button

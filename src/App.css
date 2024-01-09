@@ -4,7 +4,6 @@
 }
 
 body {
-  background-color: transparent !important;
   margin: 0;
 }
 
@@ -42,14 +41,16 @@ a {
 }
 
 #basic-navbar-nav a:hover {
-  color: #18A3EB !important;
-  text-shadow: 1px 1px 3px #43c1f7;
+  color: #1977CC !important;
+  text-shadow: 0px 0px 1px #000;
+  font-weight: 500;
 }
 
 .btn-login {
   font-size: 1.1rem !important;
-  background-image: linear-gradient(#5585E7, #37BEF7) !important;
+  color: #fff !important;
   box-shadow: 1px 1px 5px #43c1f7;
+  text-shadow: 0px 0px 1px #000;
   border-radius: 20px !important;
   padding-inline: 30px !important;
   border: 0px !important;
@@ -69,24 +70,26 @@ a {
   color: #ff0000 !important;
 }
 
-.header {
-  background-image: url('./assets/bg_3.jpg');
+#hero {
+  background: url('./assets/bg_3.jpg') top center;
   background-size: cover;
-  padding: 120px;
-  /* Aggiungi padding a tuo piacimento */
+  width: 100%;
+  height: 100vh;
+  padding: 50px;
+  background-attachment: fixed;
 }
 
 
-.header h1 {
-  color: #F0F6FB;
-  text-shadow: 3px 3px 2px grey;
+#hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 56px;
+  color: #2c4964;
 }
 
-.header p {
-  font-weight: 800;
-  color: #000;
-  text-shadow: 1px 1px 0 #888;
-  font-size: 1.2rem;
+#hero h2 {
+  font-size: 1.4rem;
+  color: #2C4964;
 }
 
 #login-form input :not(:last-child) {
@@ -152,7 +155,7 @@ form a:last-child {
   padding-inline-end: 2px;
 }
 
-#dashboard-header {
+#dashboard-hero {
   background-image: linear-gradient(#E0E0EC, #E1E1ED);
   width: 100%;
   height: 250px;
@@ -246,11 +249,6 @@ form a:last-child {
   box-shadow: 2px 2px 2px #72839C;
 }
 
-/* #appointments-container {
-  background-color: #F4F0F0;
-  border-radius: 13px;
-  box-shadow: 2px 2px 2px #888;
-} */
 
 .appointmet-card {
   background-color: #E5E5EF;
@@ -285,4 +283,30 @@ table {
     display: block;
     cursor: pointer;
   }
+}
+
+@media (max-width: 992px) {
+
+  #hero {
+    background: url('./assets/bg_3.jpg') top center;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    padding: 10px;
+    background-attachment: fixed;
+  }
+
+  #hero h1 {
+    font-size: 2rem;
+    line-height: 36px;
+  }
+
+  #hero h2 {
+    font-size: 1.3rem;
+    line-height: 28px;
+    color: #1977CC;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+
 }

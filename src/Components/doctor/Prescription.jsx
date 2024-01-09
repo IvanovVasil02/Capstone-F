@@ -75,6 +75,7 @@ const Prescription = (props) => {
                     </thead>
                     <tbody>
                       {prescription &&
+                        props.userRole === "DOCTOR" &&
                         prescription.map((item, index) => {
                           return (
                             <tr key={index}>
