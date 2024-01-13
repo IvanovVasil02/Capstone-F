@@ -213,7 +213,7 @@ form a:last-child {
 }
 
 .form-control:focus {
-  box-shadow: none !important;
+
   border: none;
 }
 

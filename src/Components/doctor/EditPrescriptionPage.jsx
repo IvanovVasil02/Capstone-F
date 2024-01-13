@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Col, Container, Form, Row, ToggleButton } from "react-bootstrap";
+import { Button, ButtonGroup, Col, Container, Form, Nav, Row, ToggleButton } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import Sidebar from "../Sidebar";
 import { useEffect, useState } from "react";
@@ -15,7 +15,10 @@ import {
 import CartPrescription from "../CartPrescription";
 import TopTogglebar from "../TopTogglebar";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { BsArrowLeftCircle } from "react-icons/bs";
+import { BsArrowLeftCircle, BsX } from "react-icons/bs";
+import { IoIosSearch } from "react-icons/io";
+import { VscPreview } from "react-icons/vsc";
+import { LiaNotesMedicalSolid } from "react-icons/lia";
 
 const EditPrescriptionPage = () => {
   const dispatch = useDispatch();
@@ -81,14 +84,22 @@ const EditPrescriptionPage = () => {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  const [showCart, setShowCart] = useState(false);
-  const handleCloseCart = () => setShowCart(false);
-  const handleShowCart = () => setShowCart(true);
-
   const [diagnosticQuestion, setDiagnosticQuestion] = useState("");
   const [priority, setPriority] = useState("");
   const [prescriptionTypology, setPrescriptionTypology] = useState("");
   const cartPrescription = useSelector((state) => state.prescriptions.cartPrescription);
+
+  const [showCart, setShowCart] = useState(false);
+  const handleCloseCart = () => setShowCart(false);
+  const handleShowCart = () => setShowCart(true);
+
+  const [showSearch, setShowSearch] = useState(false);
+  const handleCloseSearch = () => setShowSearch(false);
+  const handleShowSearch = () => setShowSearch(true);
+
+  const [showLastPrescription, setShowLastPrescription] = useState(false);
+  const handleCloseLastPrescription = () => setShowLastPrescription(false);
+  const handleShowLastPrescription = () => setShowLastPrescription(true);
 
   const handleApprovePrescription = () => {
     if (selectedPatient && actionType === "create") {
@@ -157,45 +168,70 @@ const EditPrescriptionPage = () => {
                 )}
               </Col>
               <Col md={4}>
-                <Form onSubmit={handleSubmitSearch} className='d-flex p-3' id='search-form'>
-                  <Form.Control
-                    type='input'
-                    placeholder='Cerca medicina'
-                    className='rounded-start-4 rounded-end-0 shadow-sm'
-                    aria-label='Search'
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <Button type='submit' className='rounded-end-4 rounded-start-0 bg-white text-dark border-0 shadow-sm'>
-                    <FaSearch />
-                  </Button>
-                </Form>
+                <Nav variant='underline' defaultActiveKey='/home' className='pb-3 justify-content-center text-center'>
+                  <Nav.Item className='w-25'>
+                    <Nav.Link className='text-dark'>
+                      <IoIosSearch />
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item className='w-25'>
+                    <Nav.Link className='text-dark'>
+                      <VscPreview />
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item className='w-25' nClick={handleShowCart}>
+                    <Nav.Link className={`text-dark ${showCart && `active`}`}>
+                      <LiaNotesMedicalSolid />
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+                <div className={`search-container ${showSearch ? `` : `d-none`}`}>
+                  <div className='d-flex justify-content-between align-items-center'>
+                    <ButtonGroup>
+                      {radios.map((radio, idx) => (
+                        <ToggleButton
+                          key={idx}
+                          id={`radio-${idx}`}
+                          type='radio'
+                          name='radio'
+                          variant='outline-secondary'
+                          value={radio.value}
+                          checked={radioValue === radio.value}
+                          onChange={(e) => setRadioValue(e.currentTarget.value)}
+                        >
+                          {radio.name}
+                        </ToggleButton>
+                      ))}
+                    </ButtonGroup>
+                    <BsX className='close-btn fs-3' />
+                  </div>
+                  <Form onSubmit={handleSubmitSearch} className='d-flex py-3' id='search-form'>
+                    <Form.Control
+                      type='input'
+                      placeholder='Cerca medicina'
+                      className='rounded-start-4 rounded-end-0 shadow-sm'
+                      aria-label='Search'
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <Button
+                      type='submit'
+                      className='rounded-end-4 rounded-start-0 bg-white text-dark border-0 shadow-sm'
+                    >
+                      <FaSearch />
+                    </Button>
+                  </Form>
 
-                <Row>
-                  <ButtonGroup>
-                    {radios.map((radio, idx) => (
-                      <ToggleButton
-                        key={idx}
-                        id={`radio-${idx}`}
-                        type='radio'
-                        name='radio'
-                        variant='outline-secondary'
-                        value={radio.value}
-                        checked={radioValue === radio.value}
-                        onChange={(e) => setRadioValue(e.currentTarget.value)}
-                      >
-                        {radio.name}
-                      </ToggleButton>
-                    ))}
-                  </ButtonGroup>
-                  {searchResults &&
-                    searchResults.map((medicine, index) => <MedicineCard data={medicine} key={index} />)}
-                  <CartPrescription
-                    show={showCart}
-                    handleCloseCart={handleCloseCart}
-                    user='doctor'
-                    handleApprovePrescription={handleApprovePrescription}
-                  />
-                </Row>
+                  <div className='medicine-wrapper'>
+                    {searchResults &&
+                      searchResults.map((medicine, index) => <MedicineCard data={medicine} key={index} />)}
+                  </div>
+                </div>
+                <CartPrescription
+                  show={showCart}
+                  handleCloseCart={handleCloseCart}
+                  user='doctor'
+                  handleApprovePrescription={handleApprovePrescription}
+                />
               </Col>
             </Row>
           </Col>
