@@ -1,6 +1,10 @@
 import { jwtDecode } from "jwt-decode";
 import { setError } from "./errorActions";
 export const GET_SELECTED_ELEMENT = "GET_SELECTED_ELEMENT";
+export const ADD_SELECTED_ELEMENT = "ADD_SELECTED_ELEMENT";
+export const REMOVE_SINGLE_SELECTED_ELEMENT = "REMOVE_SINGLE_SELECTED_ELEMENT";
+export const SET_PARTIAL_SELECTION = "SET_PARTIAL_SELECTION";
+export const CLEAR_PENDING_PRESCRIPTIONS = "CLEAR_PENDING_PRESCRIPTIONS";
 export const GET_SELECTED_PATIENT = "GET_SELECTED_PATIENT";
 export const GET_PRESCRIPTIONS_LIST = "GET_PRESCRIPTIONS_LIST";
 export const FILL_CART_PRESCRIPTION = "FILL_CART_PRESCRIPTIONS";
@@ -15,6 +19,16 @@ export const selectElement = (data) => (dispatch) => dispatch({ type: GET_SELECT
 
 // ---------------------------------DESELECT ELEMENT----------------------------------
 export const deselectElement = () => (dispatch) => dispatch({ type: REMOVE_SELECTED_ELEMENT });
+
+// ---------------------------------ADD SELECTED ELEMENT----------------------------------
+export const addSelectedElement = (data) => (dispatch) => dispatch({ type: ADD_SELECTED_ELEMENT, payload: data });
+
+// ---------------------------------REMOVE SINGLE SELECTED ELEMENT----------------------------------
+export const removeSelectedElement = (data) => (dispatch) =>
+  dispatch({ type: REMOVE_SINGLE_SELECTED_ELEMENT, payload: data });
+
+// ---------------------------------SET SELECTED ELEMENT TO EMPTY ARRAY----------------------------------
+export const setPartialSelection = () => (dispatch) => dispatch({ type: SET_PARTIAL_SELECTION });
 
 // ---------------------------------SELECT PATIENT----------------------------------
 export const selectPatient = (data) => (dispatch) => dispatch({ type: GET_SELECTED_PATIENT, payload: data });
@@ -198,6 +212,28 @@ export const ApprovePrescription = (
           typeRecipe: prescriptionTypology,
         }),
       });
+    } catch (error) {
+      dispatch(setError(error.message));
+      console.log(error.message);
+    }
+  };
+}; // ----------------------------------------APPROVE MULTIPLE PRESCRIPTIONS-----------------------------------------
+export const approveMultiplePrescriptions = (token, prescriptions) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetch("http://localhost:3001/doctors/approveMultiplePrescriptions", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(prescriptions),
+      });
+
+      if (resp.ok) {
+        dispatch({ type: CLEAR_PENDING_PRESCRIPTIONS, payload: prescriptions });
+        dispatch({ type: REMOVE_SELECTED_ELEMENT });
+      }
     } catch (error) {
       dispatch(setError(error.message));
       console.log(error.message);

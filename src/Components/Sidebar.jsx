@@ -89,10 +89,17 @@ const Sidebar = (props) => {
             <hr />{" "}
           </li>
           <li className='nav-item fw-medium'>
-            <Link to='/prescriptions' className='nav-link text-black'>
-              <BsJournalMedical />
-              <span> Ricette</span>
-            </Link>
+            {role === "DOCTOR" ? (
+              <Link to='/doc/prescriptions' className='nav-link text-black'>
+                <BsJournalMedical />
+                <span> Ricette</span>
+              </Link>
+            ) : (
+              <Link to='/pat/prescriptions' className='nav-link text-black'>
+                <BsJournalMedical />
+                <span> Ricette</span>
+              </Link>
+            )}
             <hr />
           </li>
           <li className='nav-item fw-medium'>

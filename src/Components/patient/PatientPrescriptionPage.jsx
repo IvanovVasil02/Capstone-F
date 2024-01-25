@@ -1,30 +1,21 @@
-import { ButtonGroup, Col, Container, Row, ToggleButton } from "react-bootstrap";
-import Sidebar from "./Sidebar";
-import { useDispatch, useSelector } from "react-redux";
-import PrescriptionCard from "./doctor/PrescriptionCard";
-import PrescriptionDataModal from "./patient/PrescriptionDataModal";
 import { useEffect, useState } from "react";
-import {
-  approveMultiplePrescriptions,
-  fetchPendingPrescriotions,
-  fetchUserPrescription,
-  setPartialSelection,
-} from "../redux/actions/prescriptionsActions";
-import Hero from "./Hero";
-import TopTogglebar from "./TopTogglebar";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
-import { MdCheckBox } from "react-icons/md";
-import { PiArrowCircleRightLight } from "react-icons/pi";
+import { fetchPendingPrescriotions, fetchUserPrescription } from "../../redux/actions/prescriptionsActions";
+import { ButtonGroup, Col, Container, Row, ToggleButton } from "react-bootstrap";
+import Sidebar from "../Sidebar";
+import TopTogglebar from "../TopTogglebar";
+import Hero from "../Hero";
+import PrescriptionCard from "../doctor/PrescriptionCard";
+import PrescriptionDataModal from "./PrescriptionDataModal";
 
-const PrescriptionPage = (props) => {
+const PatientPrescriptionPage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.user.savedToken);
   const [showSidebar, setShowSidebar] = useState(false);
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
   const userRole = useSelector((state) => state.user.currentUser?.role || 0);
-  const selectedElements = useSelector((state) => state.prescriptions.selectedElement);
   const [radioValue, setRadioValue] = useState("approved");
   const radios = [
     { name: "In attesa", value: "pending" },
@@ -83,23 +74,6 @@ const PrescriptionPage = (props) => {
     props.type && setRadioValue("pending");
   }, [props.type]);
 
-  const [selectability, setSelectability] = useState(false);
-  const [selectAll, setSelectAll] = useState(false);
-
-  const handlePartialClick = () => {
-    selectability ? setSelectability(false) : setSelectability(true);
-    dispatch(setPartialSelection());
-  };
-  const handleTotalClick = () => {
-    selectAll ? setSelectAll(false) : (setSelectAll(true), setSelectability(true));
-    dispatch(setPartialSelection());
-  };
-
-  const hadnleApproveAllSelected = async () => {
-    await dispatch(approveMultiplePrescriptions(token, selectedElements));
-    dispatch(fetchPendingPrescriotions(token));
-  };
-
   return (
     <>
       <Container fluid>
@@ -130,28 +104,6 @@ const PrescriptionPage = (props) => {
                   </ToggleButton>
                 ))}
               </ButtonGroup>
-              {radioValue === "pending" && (
-                <div className='d-flex justify-content-around '>
-                  <p className='text-secondary pointer' onClick={handlePartialClick}>
-                    Selezione parziale
-                    <span>
-                      {selectability ? <MdCheckBox className='fs-5' /> : <MdCheckBoxOutlineBlank className='fs-5' />}
-                    </span>
-                  </p>
-                  <p className='text-secondary' onClick={handleTotalClick}>
-                    Selezione totale
-                    <span>
-                      {selectAll ? <MdCheckBox className='fs-5' /> : <MdCheckBoxOutlineBlank className='fs-5' />}
-                    </span>
-                  </p>{" "}
-                  <p className='text-secondary pointer' onClick={hadnleApproveAllSelected}>
-                    Approva tutto
-                    <span>
-                      <PiArrowCircleRightLight className='fs-3' style={{ color: "#72839C" }} />
-                    </span>
-                  </p>
-                </div>
-              )}
             </Row>
             <Row>
               {useSelector((state) => {
@@ -168,8 +120,6 @@ const PrescriptionPage = (props) => {
                   handleShowPrescriptionModal={handleShowPrescriptionModal}
                   userRole={userRole}
                   location={location.pathname}
-                  selectability={radioValue === "pending" && selectability}
-                  selectAll={selectAll}
                 />
               ))}
             </Row>
@@ -184,4 +134,4 @@ const PrescriptionPage = (props) => {
     </>
   );
 };
-export default PrescriptionPage;
+export default PatientPrescriptionPage;

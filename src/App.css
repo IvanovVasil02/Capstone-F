@@ -20,6 +20,16 @@ body {
   cursor: pointer;
 }
 
+.text-lavander {
+  color: #E5E5EF;
+}
+
+.underline {
+  border: 0px;
+  border-bottom: 0.125rem solid #808098;
+  padding-inline: 3px;
+}
+
 .card {
   padding: 2em;
 }
@@ -284,6 +294,29 @@ table {
     cursor: pointer;
   }
 }
+
+.prescription-card-mini h3 {
+  font-size: 0.7rem;
+}
+
+.prescription-card-mini p {
+  font-size: 0.4rem;
+}
+
+.prescription-card-mini table {
+  font-size: 0.4rem;
+}
+
+.prescription-card-mini .table-wrapper {
+  padding-block: 0.2rem !important;
+}
+
+.prescription-card-mini td,
+.prescription-card-mini th {
+  padding: 0.1rem 0.1rem !important;
+}
+
+
 
 @media (max-width: 992px) {
 

@@ -21,7 +21,11 @@ const PrescriptionDataModal = (props) => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <Prescription data={selectedPrescription} userRole={props.userRole} />
+          <Prescription
+            data={props.data ? props.data : selectedPrescription}
+            userRole={props.userRole}
+            showLocalPrescription={props.showLocalPrescription}
+          />
         </Modal.Body>
       </Modal>
     </>

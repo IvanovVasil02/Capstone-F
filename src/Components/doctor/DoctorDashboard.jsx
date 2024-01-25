@@ -111,7 +111,7 @@ const DoctorDashboard = () => {
                   </Link>
                 </Col>
                 <Col className='p-3 ps-0 ps-md-3'>
-                  <Link to='/prescriptions' className='pointer'>
+                  <Link to='/doc/prescriptions' className='pointer'>
                     <div className='statistics-box-d'>
                       <h5>Ricette</h5>
                       <img
@@ -125,7 +125,7 @@ const DoctorDashboard = () => {
                   </Link>
                 </Col>
                 <Col className='p-3 pe-0 pe-md-3'>
-                  <Link to='/pendingPrescriptions' className='pointer'>
+                  <Link to='/doc/prescriptions/pending-prescription' className='pointer'>
                     <div className='statistics-box-d'>
                       <h5>In Attesa</h5>
                       <img

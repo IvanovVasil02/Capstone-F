@@ -1,25 +1,54 @@
 import { Card } from "react-bootstrap";
 // import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectElement } from "../../redux/actions/prescriptionsActions";
+import {
+  addSelectedElement,
+  fillCartPrescription,
+  removeSelectedElement,
+  selectElement,
+} from "../../redux/actions/prescriptionsActions";
 import { useDispatch } from "react-redux";
+import { PiArrowCircleRightLight } from "react-icons/pi";
+import { PiCheckCircleLight } from "react-icons/pi";
+import { PiCheckCircleFill } from "react-icons/pi";
+import { useEffect, useState } from "react";
+import { format } from "date-fns";
 
 const PrescriptionCard = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const formattedDate = format(new Date(props.data.issuingDate), "dd-MM-yyyy HH:mm");
+
+  const [checked, setChecked] = useState(false);
+  const handleCheckPrescription = () => (checked ? setChecked(false) : setChecked(true));
 
   const handleClick = () => {
     if (props.data.status === "APPROVED" || props.userRole === "PATIENT") {
       dispatch(selectElement(props.data));
       props.handleShowPrescriptionModal();
-    } else if (props.location === "/prescriptions") {
+    } else if (
+      props.location === "/doc/prescriptions" ||
+      props.location === "/doc/prescriptions/pending-prescription"
+    ) {
       dispatch(selectElement(props.data));
+      dispatch(fillCartPrescription(props.data.prescription));
       navigate("/editPrescription/approve");
-    } else if (props.location === "/patients") {
-      dispatch(selectElement(props.data));
-      navigate("/editPrescription/create");
     }
   };
+
+  const handleClickSelect = () => {
+    dispatch(addSelectedElement(props.data.prescriptionID));
+  };
+  const handleClickDeselect = () => {
+    dispatch(removeSelectedElement(props.data.prescriptionID));
+  };
+
+  useEffect(() => {
+    props.selectAll && (setChecked(true), handleClickSelect());
+    !props.selectAll && (setChecked(false), handleClickDeselect());
+    !props.selectability && handleClickDeselect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.selectAll, props.selectability]);
 
   return (
     <>
@@ -32,7 +61,7 @@ const PrescriptionCard = (props) => {
               </p>
               <div className='d-flex justify-content-between gap-3 flex-column flex-md-row'>
                 <p>
-                  Data: <span>{props.data.isssuingDate}</span>
+                  Data: <span>{formattedDate}</span>
                 </p>
                 <p>
                   STATO: <span>{props.data.status === "PENDING" ? "IN ATTESA" : "APPROVATA"}</span>
@@ -48,20 +77,37 @@ const PrescriptionCard = (props) => {
               ))}
             </div>
           </div>
-          <div className='d-flex flex-column justify-content-center align-items-center '>
-            <img
-              width='30'
-              height='30'
-              src='https://img.icons8.com/ios/50/circled-right.png'
-              alt='circled-right'
-              className='pointer'
-              onClick={handleClick}
-            />
-            {props.data.status === "APPROVED" || props.userRole === "PATIENT" ? (
-              <span>Di più</span>
-            ) : (
-              <span>Approva</span>
+          <div className='d-flex gap-2'>
+            {props.selectability && (
+              <div
+                className='d-flex flex-column justify-content-center align-items-center'
+                onClick={handleCheckPrescription}
+              >
+                {checked ? (
+                  <PiCheckCircleFill
+                    className='pointer fs-2'
+                    style={{ color: "#72839C" }}
+                    onClick={() => handleClickDeselect()}
+                  />
+                ) : (
+                  <PiCheckCircleLight
+                    className='pointer fs-2'
+                    style={{ color: "#72839C" }}
+                    onClick={() => handleClickSelect()}
+                  />
+                )}
+                {props.data.status === "PENDING" && props.userRole !== "PATIENT" && <span>Seleziona</span>}
+              </div>
             )}
+
+            <div className='d-flex flex-column justify-content-center align-items-center '>
+              <PiArrowCircleRightLight className='pointer fs-2' onClick={handleClick} style={{ color: "#72839C" }} />
+              {props.data.status === "APPROVED" || props.userRole === "PATIENT" ? (
+                <span>Di più</span>
+              ) : (
+                <span>Approva</span>
+              )}
+            </div>
           </div>
         </Card.Body>
       </Card>
