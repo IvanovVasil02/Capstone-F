@@ -1,5 +1,5 @@
 import { Card, Col } from "react-bootstrap";
-import { deselectElement, selectPatient } from "../../redux/actions/prescriptionsActions";
+import { clearCart, deselectElement, selectPatient } from "../../redux/actions/prescriptionsActions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CiSquarePlus } from "react-icons/ci";
@@ -12,6 +12,7 @@ const PatientCard = ({ data }) => {
   const handleClick = () => {
     dispatch(selectPatient(data));
     dispatch(deselectElement());
+    dispatch(clearCart());
     navigate("/editPrescription/create");
   };
   return (

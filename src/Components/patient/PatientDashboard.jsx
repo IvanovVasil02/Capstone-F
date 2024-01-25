@@ -75,7 +75,7 @@ const PatientDashboard = () => {
               </Row>
               <Row className='column-gap-4 py-4'>
                 <Col className='p-2'>
-                  <Link to='/prescriptions'>
+                  <Link to='/pat/prescriptions'>
                     <div className='statistics-box-d'>
                       <h5>Ricette</h5>
                       <img
@@ -103,7 +103,7 @@ const PatientDashboard = () => {
                   </Link>
                 </Col>
                 <Col className='p-2'>
-                  <Link to='/pendingPrescriptions'>
+                  <Link to='/pat/prescriptions/pending-prescription'>
                     <div className='statistics-box-d'>
                       <h5>In attesa</h5>
                       <img

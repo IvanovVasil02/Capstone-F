@@ -3,6 +3,7 @@ import CartItem from "./patient/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, sendPrescriptionRequest } from "../redux/actions/prescriptionsActions";
 import { useEffect, useRef, useState } from "react";
+import { BsX } from "react-icons/bs";
 
 const CartPrescription = (props) => {
   const dispatch = useDispatch();
@@ -46,8 +47,9 @@ const CartPrescription = (props) => {
     <>
       <div ref={divRef} className={`p-0 py-2 z-2 sticky-bottom ${!props.show && "d-none"}`}>
         <Card className='p-2' id='cart-prescriptions'>
-          <Card.Body>
-            <Card.Title className='d-flex justify-content-center py-2'>Ricetta</Card.Title>
+          <BsX className='close-btn ms-auto' onClick={props.handleCloseCart} />
+          <Card.Body className='py-0'>
+            <Card.Title className='d-flex justify-content-center pb-2'>Ricetta</Card.Title>
             {cartPrescription && cartPrescription.map((medicine, index) => <CartItem data={medicine} key={index} />)}
           </Card.Body>
           {isSuccess && cartPrescription.length > 0 && (

@@ -8,8 +8,9 @@ import AddPrescription from "./Components/patient/AddPrescription";
 import DoctorDashboard from "./Components/doctor/DoctorDashboard";
 import PatientsPage from "./Components/doctor/PatientsPage";
 import EditPrescriptionPage from "./Components/doctor/EditPrescriptionPage";
-import PrescriptionPage from "./Components/PrescriptionPage";
 import DoctorAppointments from "./Components/doctor/DoctorAppointments";
+import PatientPrescriptionPage from "./Components/patient/PatientPrescriptionPage";
+import DoctorPrescriptionPage from "./Components/doctor/DoctorPrescriptionPage";
 
 function App() {
   return (
@@ -23,8 +24,10 @@ function App() {
           <Route path='/addPrescription' element={<AddPrescription />} />
           <Route path='/doc-dashboard' element={<DoctorDashboard />} />{" "}
           <Route path='/patients' element={<PatientsPage />} />
-          <Route path='/prescriptions' element={<PrescriptionPage />} />{" "}
-          <Route path='/pendingPrescriptions' element={<PrescriptionPage type='pending' />} />
+          <Route path='/pat/prescriptions' element={<PatientPrescriptionPage />} />{" "}
+          <Route path='/doc/prescriptions' element={<DoctorPrescriptionPage />} />{" "}
+          <Route path='/pat/prescriptions/pending-prescription' element={<PatientPrescriptionPage type='pending' />} />
+          <Route path='/doc/prescriptions/pending-prescription' element={<DoctorPrescriptionPage type='pending' />} />
           <Route path='/editPrescription/:actionType' element={<EditPrescriptionPage />} />
         </Routes>
       </BrowserRouter>
