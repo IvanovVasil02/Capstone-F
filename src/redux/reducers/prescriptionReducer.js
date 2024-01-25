@@ -1,6 +1,8 @@
 import { LOGOUT } from "../actions/authenticationActions";
 import {
   ADD_MEDICINE_TO_PRESCRIPTION,
+  ADD_SELECTED_ELEMENT,
+  CLEAR_PENDING_PRESCRIPTIONS,
   FILL_CART_PRESCRIPTION,
   GET_PENDING_PRESCRIPTIONS,
   GET_PRESCRIPTIONS_LIST,
@@ -8,7 +10,9 @@ import {
   GET_SELECTED_PATIENT,
   REMOVE_MEDICINE_FROM_PRESCRIPTION,
   REMOVE_SELECTED_ELEMENT,
+  REMOVE_SINGLE_SELECTED_ELEMENT,
   RESET_CART_PRESCRIPTION,
+  SET_PARTIAL_SELECTION,
 } from "../actions/prescriptionsActions";
 
 const prescriptionState = {
@@ -30,6 +34,34 @@ const prescriptionReducer = (state = prescriptionState, action) => {
         ...state,
         selectedElement: null,
       };
+    case ADD_SELECTED_ELEMENT:
+      return {
+        ...state,
+        selectedElement: [...state.selectedElement, action.payload],
+      };
+    case REMOVE_SINGLE_SELECTED_ELEMENT:
+      return {
+        ...state,
+        selectedElement:
+          state.selectedElement && Array.isArray(state.selectedElement)
+            ? state.selectedElement.filter((prescriptionId) => prescriptionId !== action.payload)
+            : null,
+      };
+    case SET_PARTIAL_SELECTION:
+      return {
+        ...state,
+        selectedElement: [],
+      };
+
+    case CLEAR_PENDING_PRESCRIPTIONS:
+      return {
+        ...state,
+        pendingPrescriptions: state.pendingPrescriptions.filter((prescription) => {
+          const prescriptionId = prescription?.prescriptionID;
+          return prescriptionId ? !action.payload.includes(prescriptionId) : true;
+        }),
+      };
+
     case GET_SELECTED_PATIENT:
       return {
         ...state,

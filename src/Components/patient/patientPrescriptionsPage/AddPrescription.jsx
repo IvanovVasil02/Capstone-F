@@ -1,14 +1,14 @@
 import { Button, ButtonGroup, Col, Container, Form, Row, ToggleButton } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import MedicineCard from "./MedicineCard";
-import Sidebar from "../Sidebar";
+import Sidebar from "../../Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSearchMedicine } from "../../redux/actions/mainActions";
-import CartPrescription from "../CartPrescription";
-import Hero from "../Hero";
+import { fetchSearchMedicine } from "../../../redux/actions/mainActions";
+import CartPrescription from "../../PrescriptionComponents/CartPrescription";
+import Hero from "../../Hero";
 import { useNavigate } from "react-router-dom";
-import TopTogglebar from "../TopTogglebar";
+import TopTogglebar from "../../TopTogglebar";
 
 const AddPrescription = () => {
   const dispatch = useDispatch();

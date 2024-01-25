@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Nav, Navbar, Row } from "react-bootstrap";
 import { BsClipboardHeart, BsX } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../redux/actions/authenticationActions";
+import { registerUser } from "../../redux/actions/authenticationActions";
 
 const RegisterModal = (props) => {
   const dispatch = useDispatch();

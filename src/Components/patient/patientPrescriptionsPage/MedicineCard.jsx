@@ -1,6 +1,6 @@
 import { Card, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addMedicine } from "../../redux/actions/prescriptionsActions";
+import { addMedicine } from "../../../redux/actions/prescriptionsActions";
 
 const MedicineCard = ({ data }) => {
   const dispatch = useDispatch();

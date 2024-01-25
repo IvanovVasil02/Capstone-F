@@ -1,16 +1,16 @@
 import { Col, Container, Row } from "react-bootstrap";
 import AppointmentCard from "./AppointmentCard";
-import Sidebar from "../Sidebar";
+import Sidebar from "../../Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   askAppointment,
   fetchUserAppointments,
   fetchUserPendingAppointments,
-} from "../../redux/actions/appointmentActions";
+} from "../../../redux/actions/appointmentActions";
 import { useEffect, useState } from "react";
-import Hero from "../Hero";
+import Hero from "../../Hero";
 import { useNavigate } from "react-router-dom";
-import TopTogglebar from "../TopTogglebar";
+import TopTogglebar from "../../TopTogglebar";
 
 const PatientAppointments = () => {
   const dispatch = useDispatch();
