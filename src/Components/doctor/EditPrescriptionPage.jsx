@@ -144,6 +144,7 @@ const EditPrescriptionPage = () => {
                     handleShow={handleShow}
                     handleCloseCart={handleCloseCart}
                     handleShowCart={handleShowCart}
+                    userRole='DOCTOR'
                   />
                 ) : (
                   <Prescription
@@ -151,6 +152,7 @@ const EditPrescriptionPage = () => {
                     handleShow={handleShow}
                     handleCloseCart={handleCloseCart}
                     handleShowCart={handleShowCart}
+                    userRole='DOCTOR'
                   />
                 )}
               </Col>
