@@ -1,7 +1,7 @@
 import { Button, Card } from "react-bootstrap";
-import CartItem from "./patient/CartItem";
+import CartItem from "../patient/patientPrescriptionsPage/CartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, sendPrescriptionRequest } from "../redux/actions/prescriptionsActions";
+import { clearCart, sendPrescriptionRequest } from "../../redux/actions/prescriptionsActions";
 import { useEffect, useRef, useState } from "react";
 import { BsX } from "react-icons/bs";
 

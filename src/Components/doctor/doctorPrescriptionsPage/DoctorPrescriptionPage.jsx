@@ -6,15 +6,15 @@ import {
   fetchPendingPrescriotions,
   fetchUserPrescription,
   setPartialSelection,
-} from "../../redux/actions/prescriptionsActions";
+} from "../../../redux/actions/prescriptionsActions";
 import { ButtonGroup, Col, Container, Row, ToggleButton } from "react-bootstrap";
-import Sidebar from "../Sidebar";
-import TopTogglebar from "../TopTogglebar";
-import Hero from "../Hero";
+import Sidebar from "../../Sidebar";
+import TopTogglebar from "../../TopTogglebar";
+import Hero from "../../Hero";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { PiArrowCircleRightLight } from "react-icons/pi";
-import PrescriptionCard from "./PrescriptionCard";
-import PrescriptionDataModal from "../patient/PrescriptionDataModal";
+import PrescriptionCard from "../../PrescriptionComponents/PrescriptionCard";
+import PrescriptionDataModal from "../../PrescriptionComponents/PrescriptionDataModal";
 
 const DoctorPrescriptionPage = (props) => {
   const dispatch = useDispatch();

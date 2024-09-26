@@ -1,6 +1,6 @@
 import { Modal, Navbar } from "react-bootstrap";
 import { BsClipboardHeart, BsX } from "react-icons/bs";
-import Prescription from "../doctor/Prescription";
+import Prescription from "./Prescription";
 import { useSelector } from "react-redux";
 
 const PrescriptionDataModal = (props) => {

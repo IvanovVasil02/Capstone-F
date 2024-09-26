@@ -1,13 +1,13 @@
 import { ButtonGroup, Col, Container, Row, ToggleButton } from "react-bootstrap";
-import Sidebar from "../Sidebar";
+import Sidebar from "../../Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserAppointments, fetchUserPendingAppointments } from "../../redux/actions/appointmentActions";
+import { fetchUserAppointments, fetchUserPendingAppointments } from "../../../redux/actions/appointmentActions";
 import AppointmentCard from "./AppointmentCard";
 import AppointmentModal from "./AppointmentModal";
 import { useEffect, useState } from "react";
-import Hero from "../Hero";
+import Hero from "../../Hero";
 import { useNavigate } from "react-router-dom";
-import TopTogglebar from "../TopTogglebar";
+import TopTogglebar from "../../TopTogglebar";
 
 const DoctorAppointments = () => {
   const dispatch = useDispatch();

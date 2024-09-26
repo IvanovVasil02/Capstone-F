@@ -1,5 +1,5 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
-import RegisterModal from "../RegisterModal";
+import RegisterModal from "../loginComponents/RegisterModal";
 import { useState } from "react";
 
 const Header = () => {

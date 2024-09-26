@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchPendingPrescriotions, fetchUserPrescription } from "../../redux/actions/prescriptionsActions";
+import { fetchPendingPrescriotions, fetchUserPrescription } from "../../../redux/actions/prescriptionsActions";
 import { ButtonGroup, Col, Container, Row, ToggleButton } from "react-bootstrap";
-import Sidebar from "../Sidebar";
-import TopTogglebar from "../TopTogglebar";
-import Hero from "../Hero";
-import PrescriptionCard from "../doctor/PrescriptionCard";
-import PrescriptionDataModal from "./PrescriptionDataModal";
+import Sidebar from "../../Sidebar";
+import TopTogglebar from "../../TopTogglebar";
+import Hero from "../../Hero";
+import PrescriptionCard from "../../PrescriptionComponents/PrescriptionCard";
+import PrescriptionDataModal from "../../PrescriptionComponents/PrescriptionDataModal";
 
 const PatientPrescriptionPage = (props) => {
   const dispatch = useDispatch();

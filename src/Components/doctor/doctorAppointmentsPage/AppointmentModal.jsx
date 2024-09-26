@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { BsX } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { fixApppointment } from "../../redux/actions/appointmentActions";
+import { fixApppointment } from "../../../redux/actions/appointmentActions";
 
 const AppointmentModal = (props) => {
   const dispatch = useDispatch();
@@ -29,6 +29,7 @@ const AppointmentModal = (props) => {
 
   useEffect(() => {
     props.setAppointmentsChanged(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasError]);
 
   const handleSubmit = (evt) => {

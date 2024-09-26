@@ -1,25 +1,25 @@
 import { Button, ButtonGroup, Col, Container, Form, Nav, Row, ToggleButton } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
-import Sidebar from "../Sidebar";
+import Sidebar from "../../Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PrescriptionModal from "./PrescriptionModal";
-import MedicineCard from "../patient/MedicineCard";
-import { fetchSearchMedicine } from "../../redux/actions/mainActions";
-import Prescription from "./Prescription";
+import MedicineCard from "../../patient/patientPrescriptionsPage/MedicineCard";
+import { fetchSearchMedicine } from "../../../redux/actions/mainActions";
+import Prescription from "../../PrescriptionComponents/Prescription";
 import {
   ApprovePrescription,
   createPrescription,
   fillCartPrescription,
-} from "../../redux/actions/prescriptionsActions";
-import CartPrescription from "../CartPrescription";
-import TopTogglebar from "../TopTogglebar";
+} from "../../../redux/actions/prescriptionsActions";
+import CartPrescription from "../../PrescriptionComponents/CartPrescription";
+import TopTogglebar from "../../TopTogglebar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { BsArrowLeftCircle, BsX } from "react-icons/bs";
 import { IoIosSearch } from "react-icons/io";
 import { VscPreview } from "react-icons/vsc";
 import { LiaNotesMedicalSolid } from "react-icons/lia";
-import PrescriptionDataModal from "../patient/PrescriptionDataModal";
+import PrescriptionDataModal from "../../PrescriptionComponents/PrescriptionDataModal";
 
 const EditPrescriptionPage = () => {
   const dispatch = useDispatch();

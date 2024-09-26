@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addMedicine, removeMedcine } from "../../redux/actions/prescriptionsActions";
+import { addMedicine, removeMedcine } from "../../../redux/actions/prescriptionsActions";
 
 const CartItem = ({ data }) => {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Col, Form, Modal, Nav, Navbar, Row } from "react-bootstrap";
 import { BsClipboardHeart, BsX } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLogin } from "../redux/actions/authenticationActions";
+import { fetchLogin } from "../../redux/actions/authenticationActions";
 import { useNavigate } from "react-router-dom";
 const LoginModal = (props) => {
   const dispatch = useDispatch();

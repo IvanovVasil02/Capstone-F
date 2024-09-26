@@ -1,19 +1,25 @@
 import { Card, Col } from "react-bootstrap";
-import { clearCart, deselectElement, selectPatient } from "../../redux/actions/prescriptionsActions";
+import { clearCart, deselectElement, selectPatient } from "../../../redux/actions/prescriptionsActions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CiSquarePlus } from "react-icons/ci";
 import { PiFolderSimplePlusLight } from "react-icons/pi";
 
-const PatientCard = ({ data }) => {
+const PatientCard = ({ data, handleShowPatientDataModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleCreatePrescription = () => {
     dispatch(selectPatient(data));
     dispatch(deselectElement());
     dispatch(clearCart());
     navigate("/editPrescription/create");
+  };
+  const handleShowPatientData = () => {
+    dispatch(selectPatient(data));
+    dispatch(deselectElement());
+    dispatch(clearCart());
+    handleShowPatientDataModal();
   };
   return (
     <>
@@ -47,8 +53,8 @@ const PatientCard = ({ data }) => {
               </div>
             </div>
             <div className='ms-auto'>
-              <CiSquarePlus className='fs-2 pointer d-block' onClick={handleClick} />
-              <PiFolderSimplePlusLight className='fs-2 pointer' />
+              <CiSquarePlus className='fs-2 pointer d-block' onClick={handleCreatePrescription} />
+              <PiFolderSimplePlusLight className='fs-2 pointer' onClick={handleShowPatientData} />
             </div>
           </Card.Body>
         </Card>

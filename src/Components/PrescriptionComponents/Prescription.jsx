@@ -14,9 +14,10 @@ const Prescription = (props) => {
   const month = today.getMonth() + 1; // Gennaio è 0
   const year = today.getFullYear();
   const formattedCurrentDate = `${day}/${month}/${year}`;
-  const formattedDate = props.data.issuingDate
-    ? format(new Date(props.data.issuingDate), "dd-MM-yyyy")
-    : formattedCurrentDate;
+  const formattedDate =
+    props.data && props.data.issuingDate
+      ? format(new Date(props.data.issuingDate), "dd-MM-yyyy")
+      : formattedCurrentDate;
   return (
     <>
       {prescription && props.data && (

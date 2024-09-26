@@ -1,22 +1,29 @@
 import { Button, ButtonGroup, Col, Container, Form, Row, ToggleButton } from "react-bootstrap";
-import Sidebar from "../Sidebar";
+import Sidebar from "../../Sidebar";
 import { FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import PatientCard from "./PatientCard";
-import { fetchSearchPatient } from "../../redux/actions/patientsDoctorActions";
+import { fetchSearchPatient } from "../../../redux/actions/patientsDoctorActions";
 
-import Hero from "../Hero";
-import { useLocation, useNavigate } from "react-router-dom";
-import TopTogglebar from "../TopTogglebar";
+import Hero from "../../Hero";
+import { useNavigate } from "react-router-dom";
+import TopTogglebar from "../../TopTogglebar";
+import PatientDataModal from "./PatientDataModal";
 
 const PatientsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.user.savedToken);
   const role = useSelector((state) => state.user.currentUser.role);
+  const [showPatientDataModal, setShowPatientDataModal] = useState(false);
+
+  const handleShowPatientDataModal = () => setShowPatientDataModal(true);
+  const handleClosePatientDataModal = () => setShowPatientDataModal(false);
+
+  const selectedPatient = useSelector((state) => state.prescriptions.selectedPatient);
+
   const [showSidebar, setShowSidebar] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     if (showSidebar) {
@@ -30,12 +37,9 @@ const PatientsPage = () => {
     };
   }, [showSidebar]);
 
-  const closeSidebar = () => {
-    setShowSidebar(false);
-  };
-  const openSidebar = () => {
-    setShowSidebar(true);
-  };
+  const closeSidebar = () => setShowSidebar(false);
+
+  const openSidebar = () => setShowSidebar(true);
 
   const [search, setSearch] = useState("");
   const [radioValue, setRadioValue] = useState("name");
@@ -112,12 +116,17 @@ const PatientsPage = () => {
 
               {searchResults &&
                 searchResults.map((patient, index) => (
-                  <PatientCard key={index} data={patient} location={location.pathname} />
+                  <PatientCard key={index} data={patient} handleShowPatientDataModal={handleShowPatientDataModal} />
                 ))}
             </Row>
           </Col>
         </Row>
       </Container>
+      <PatientDataModal
+        showPatientDataModal={showPatientDataModal}
+        handleClosePatientDataModal={handleClosePatientDataModal}
+        data={selectedPatient}
+      />
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { BsClipboardHeart } from "react-icons/bs";
-import LoginModal from "../LoginModal";
+import LoginModal from "../loginComponents/LoginModal";
 import { useState } from "react";
 const Topbar = () => {
   const [showModal, setShowModal] = useState(false);
